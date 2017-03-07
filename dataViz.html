@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Crimson+Text">
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<!-- Using d3 cloud library from https://github.com/jasondavies/d3-cloud. -->
+<script src="wordCloud.js"></script>
+<style>
+  body {
+    background-color: #29262D;
+    font-family: 'Crimson Text', serif;
+  }
+
+  p, ol, li {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    color: #CCDBE1;
+  }
+
+  h3{
+    color:#CCDBE1;
+  }
+
+  h2{
+    color:#CCDBE1;
+    font-size: 16px;
+    margin-left: 150px;
+    margin-right: 700px;
+    font-weight:300;
+  }
+  .axis text {
+      font-family: sans-serif;
+      font-size: 11pt;
+  }
+
+  svg {
+/*    border: solid #dddddd 2px;
+    border-radius: 4px;*/
+    display: block;
+    margin: auto;
+  }
+</style>
+</head>
+
+<body>
+<h3 style="margin-left: 150px; margin-right: 50px">The Century of Movies</h3>
+<h2>The graph shows the average IMDb score of each decade from 1916-2016 compared with the overall average score, along with average facebook
+ likes and average budget. The word clouds show popular movie genres in each decade.</h2>
+  <script>
+    // declare movieData outside the callback function
+    var movieData, decadeData, ttAvgScore;
+    // genreData[0] for genres; genreData[1] for frequencies; genreData[2] for decade labels
+    var genreData = [];
+    var svg = d3.select("body")
+                .append("svg")
+                .attr("width", 1300)
+                .attr("height", 700);
+
+    // callback function that takes in pass in data
+    d3.json("movie.json", function(error, data) {
+      movieData = data;
+      // calculate the total average imdb score
+      ttAvgScore = d3.sum(data, function(d) {return d.imdb_score;})/data.length;
+
+      var i = 0, decadeStart = 0, decadeIndex = 0, tempGenre, tempIndex;
+      // traverse the whole movie dataset
+      while(i < movieData.length) {
+        // set up decade start within each round (10 years)
+        decadeStart = movieData[i].title_year;
+        genreData.push({decade:"", genre:[], freq:[]});
+        // set "decade" attribute for movies in current decade
+        while((i < movieData.length) && (movieData[i].title_year % decadeStart < 10)) {
+          // assign decade labels
+          movieData[i].decade = decadeStart + "-" + (decadeStart + 9);
+
+          // temporary container for each movie's genres
+          tempGenre = movieData[i].genres.split("|");
+          // traverse single movie's genres
+          tempGenre.forEach(function(d) {
+            // find if the genre existed in our database
+            tempIndex = genreData[decadeIndex].genre.indexOf(d);
+            // if no, then add it in
+            if(tempIndex == -1) {
+              genreData[decadeIndex].genre.push(d);
+              genreData[decadeIndex].freq.push(1);
+            }
+            // if yes, update corresponding frequency
+            else {
+              genreData[decadeIndex].freq[tempIndex]++;
+            }
+          });
+          i++;
+        }
+        // record decade label in genreData
+        genreData[decadeIndex].decade = movieData[i-1].decade;
+        decadeIndex++;
+      };
+
+      // nest movie data into dacades
+      movieData = d3.nest()
+                    .key(function(d) { return d.decade; })
+                    .entries(movieData);
+
+      // calculate average data for our circle objects
+      decadeData = [{decade:0, avgScore:0, avgBudget:0, avgLike:0, topGenre:[], genreFreq:[]}];
+      for(i = 0; i < movieData.length; i++) {
+        decadeData[i] = ({decade: movieData[i].key,
+                          avgScore: d3.mean(movieData[i].values, function(d){return d.imdb_score;}),
+                          avgBudget: d3.mean(movieData[i].values, function(d){return d.budget;}),
+                          avgLike: d3.mean(movieData[i].values, function(d){return d.movie_facebook_likes;})})
+      };
+
+      var decadeScale = d3.scaleBand()
+                          .domain(decadeData.map(function(d) {return d.decade;}))
+                          .range([80, 1150]);
+
+      var scoreScale = d3.scaleLinear()
+                          .domain([0, 10])
+                          .range([380, 80]);
+
+      var budgetScale = d3.scaleSqrt()
+                          .domain([0, d3.max(decadeData, function(d) {return d.avgBudget;})])
+                          .range([0, 53]);
+
+      var budgetExplainScale = d3.scaleSqrt()
+                                  .domain([0, d3.max(decadeData, function(d) {return d.avgBudget;})])
+                                  .range([0, 20]);
+
+      var likeScale = d3.scaleLog()
+                        .domain([305, 893, 4142, 14340])
+                        .interpolate(d3.interpolateRgb)
+                        .range(["#ffeb66", "#ffca49", "#ff9600", "#ff4600"]);
+
+      // plot the total average score; y coordinate is calculated by scoreScale
+      svg.append("path")
+          .attr("d", "M29 " + scoreScale(ttAvgScore) + " L1150 " + scoreScale(ttAvgScore))
+          .attr("stroke", "#CCDBE1")
+          .attr("stroke-width", "1px")
+          .attr("stroke-opacity", .2)
+          .attr("stroke-dasharray", "5")
+
+      // plot each circle of decades of movies
+      decadeData.forEach(function(d) {
+        svg.append("circle")
+            .attr("cx", decadeScale(d.decade))
+            .attr("cy", scoreScale(d.avgScore))
+            .attr("r", budgetScale(d.avgBudget))
+            .attr("fill", likeScale(d.avgLike))
+        // plot decade labels
+        svg.append("text")
+            .text(d.decade)
+            .attr("x", decadeScale(d.decade))
+            .attr("y", scoreScale(d.avgScore) - budgetScale(d.avgBudget) - 20)
+            .attr("text-anchor", "middle")
+            .attr("alignment-baseline", "middle")
+            .style("font-size", "12px")
+            .style("fill","#CCDBE1");
+        // plot circle center
+        svg.append("circle")
+            .attr("cx", decadeScale(d.decade))
+            .attr("cy", scoreScale(d.avgScore))
+            .attr("r", 1.5)
+            .attr("fill", "#ff4600")
+            .attr("opacity", .9);
+        // plot vertical dash line for connecting circles with word clouds
+        svg.append("line")
+           .attr("x1",decadeScale(d.decade))
+           .attr("x2",decadeScale(d.decade))
+           .attr("y1",60)
+           .attr("y2",400)
+           .attr("stroke","#CCDBE1")
+           .attr("stroke-width","0.5px")
+           .attr("stroke-opacity",0.2)
+           .attr("stroke-dasharray","5, 5" );
+
+      });
+
+      // plot line connecting each avgScore of decades
+      var pathGenerator = d3.line()
+                            .x(function(d) {return decadeScale(d.decade);})
+                            .y(function(d) {return scoreScale(d.avgScore);});
+
+      var lines = svg.append("path")
+                      .attr("d",function(d) {
+                        return pathGenerator(decadeData);
+                      })
+                      .attr("stroke", "#CCDBE1")
+                      .attr("stroke-width", "1px")
+                      .attr("stroke-opacity", .5)
+                      .attr("stroke-linejoin", "round")
+                      .attr("fill", "none");
+
+      // referencing http://bl.ocks.org/ericcoopey/6382449 for word cloud creation
+      var colorScale = d3.scaleLinear()
+                          .domain([0,1,2,3,4,5,6,10,15,20,100])
+                          // .domain([100,20,15,10,6,5,4,3,2,1,0])
+                          .range(["#dbdbdb", "#d7d7d7", "#c3c3c3", "#afafaf", "#9b9b9b", "#878787", "#737373", "#5f5f5f", "#4b4b4b"]);
+
+      // function that plots each given word list into "cloud form"
+      function drawCloud(words) {
+        svg.append("g")
+        .attr("class", "wordcloud")
+        // word cloud's horizontal position depends on the decade it belongs to
+        .attr("transform", "translate(" + decadeScale(decadeData[words[0].decadeCount].decade) + "," + (scoreScale(decadeData[words[0].decadeCount].avgScore) + 180) + ")")
+        // .attr("transform", "translate(" + decadeScale(decadeData[words[0].decadeCount].decade) + "," + 335 + ")")
+        .selectAll("text")
+        .data(words)
+        .enter().append("text")
+        // adjust the font size scale accordingly to each decade's genre list
+        .style("font-size", function(d) {return d3.scaleLinear().domain(d.freqExtent).range([5, 17])(d.freq) + "px";})
+        .style("fill", function(d, i) {return colorScale(i);})
+        .attr("transform", function(d) {
+            return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+        })
+        .text(function(d) {return d.genre;});
+      };
+      // for toggling decades
+      var decadeCount = 0;
+      genreData.forEach(function(decade) {
+        var temp = [{genre:"", freq:0, freqExtent:[], decadeCount:decadeCount}];
+        for(i = 0; i < decade.genre.length; i++) {
+          temp[i] = {genre:decade.genre[i], freq:decade.freq[i], freqExtent:d3.extent(decade.freq), decadeCount:decadeCount};
+        };
+        decadeCount++;
+        d3.layout.cloud().size([100, 200])
+                          .words(temp)
+                          .rotate(0)
+                          .fontSize(function(d) {return d3.scaleLinear().domain(d.freqExtent).range([5, 17])(d.freq);})
+                          .on("end", drawCloud)
+                          .start();
+
+      });
+
+      // like scale annotation
+      var minColor = "#ffeb66";
+      var maxColor = "#ff4600";
+      //interpolate a continuous color transition
+      var computeColor = d3.interpolate(minColor, maxColor);
+      //create a defs for color transition
+      var defs = svg.append("defs");
+      var linearGradient = defs.append("linearGradient")
+          .attr("id", "linearColor")
+          .attr("x1", "0%")
+          .attr("y1", "0%")
+          .attr("x2", "100%")
+          .attr("y2", "0%");
+
+      var stop1 = linearGradient.append("stop")
+          .attr("offset", "0%")
+          .style("stop-color", minColor.toString());
+
+      var stop2 = linearGradient.append("stop")
+          .attr("offset", "100%")
+          .style("stop-color", maxColor.toString());
+
+      //add a rectangle for color transition explanation
+      var colorRect = svg.append("rect")
+          .attr("x", 650)
+          .attr("y", 512)
+          .attr("width", 280)
+          .attr("height", 10)
+          .attr("rx",3)
+          .attr("ry",3)
+          // .attr("stroke","#CCDBE1")
+          // .attr("stroke-width","1px")
+                  // .attr("transform","translate(0,300)")
+          // .attr("transform","rotate("+(-90)+")")
+          .style("fill", "url(#" + linearGradient.attr("id") + ")");
+
+      svg.append("text")
+          .text("Facebook Likes")
+          .attr("x",760)
+          .attr("y",540)
+          .attr("font-size","12px")
+          .style("fill","#CCDBE1");
+
+      //plot like/color scale annotation
+      svg.append("text")
+         .text(decadeData[0].avgLike.toPrecision(4))
+         .attr("x","635")
+         .attr("y","540")
+         .attr("font-size","12px")
+         .style("fill","#CCDBE1");
+
+      svg.append("text")
+         .text(decadeData[9].avgLike.toPrecision(4))
+         .attr("x","910")
+         .attr("y","540")
+         .attr("font-size","12px")
+        .style("fill","#CCDBE1");
+
+      // plot y axis for imdb score
+      svg.append("text")
+         .attr("x", 49)
+         .attr("y", 210)
+         .attr("font-size","12px")
+         .text("Average Score: " + ttAvgScore.toPrecision(4))
+         .style("fill","#CCDBE1");
+
+      svg.append("path")
+          .attr("d", "M24 " + scoreScale(10) + " L29 " + scoreScale(10) + " 29 " + scoreScale(0) + " 24 " + scoreScale(0))
+          .attr("fill", "none")
+          .attr("stroke","#CCDBE1")
+          .attr("stroke-width","1.5px")
+          .attr("opacity","0.5");
+
+      // total average score tick on the axis
+      svg.append("path")
+          .attr("d", "M29 " + scoreScale(ttAvgScore) + " L34 " + scoreScale(ttAvgScore))
+          .attr("fill", "none")
+          .attr("stroke","#CCDBE1")
+          .attr("stroke-width","1.5px")
+          .attr("opacity","0.5");
+
+      svg.append("text")
+         .text("IMDb Score")
+         .attr("x",130)
+         .attr("y",66)
+         .attr("font-size","12px")
+         .attr("transform", "rotate(-90 130 66) translate(-180 -110)")
+        .style("fill","#CCDBE1");
+
+      svg.append("text")
+         .text("10")
+         .attr("x","10")
+         .attr("y","82")
+         .attr("font-size","12px")
+        .style("fill","#CCDBE1");
+
+      svg.append("text")
+         .text("0")
+         .attr("x","14")
+         .attr("y","382")
+         .attr("font-size","12px")
+        .style("fill","#CCDBE1");
+
+      // plot budget size annotation
+      svg.append("text")
+         .text("avg. Budget Min(243635.6)")
+         .attr("x","47")
+         .attr("y","520")
+         .attr("font-size","12px")
+         .style("fill","#CCDBE1");
+
+      svg.append("line")
+         .attr("x1","187")
+         .attr("x2","293")
+         .attr("y1","518")
+         .attr("y2","518")
+         .style("stroke","#CCDBE1")
+         .style("stroke-width","1px")
+         .style("stroke-opacity","0.2");
+
+      svg.append("text")
+         .text("avg. Budget Max (47147715.3)")
+         .attr("x","323")
+         .attr("y","520")
+         .attr("font-size","12px")
+         .style("fill","#CCDBE1");
+
+      svg.append("circle")
+         .attr("cx", 185)
+         .attr("cy", 518)
+         .attr("r", budgetExplainScale(decadeData[0].avgBudget))
+         .attr("fill", "#ffca49");
+
+      svg.append("circle")
+         .attr("cx", 210)
+         .attr("cy", 518)
+         .attr("r", budgetExplainScale(decadeData[3].avgBudget))
+         .attr("fill", "#ffca49");
+
+       svg.append("circle")
+          .attr("cx", 245)
+          .attr("cy", 518)
+          .attr("r", budgetExplainScale(decadeData[6].avgBudget))
+          .attr("fill", "#ffca49");
+
+       svg.append("circle")
+          .attr("cx", 296)
+          .attr("cy", 518)
+          .attr("r", budgetExplainScale(decadeData[9].avgBudget))
+          .attr("fill", "#ffca49");
+
+    });
+  </script>
+  </p>
+</body>
