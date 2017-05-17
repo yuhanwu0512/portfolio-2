@@ -1,376 +1,195 @@
 <!DOCTYPE html>
-<html>
-<head>
-<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Crimson+Text">
-<script src="https://d3js.org/d3.v4.min.js"></script>
-<!-- Using d3 cloud library from https://github.com/jasondavies/d3-cloud. -->
-<script src="wordCloud.js"></script>
-<style>
-  body {
-    background-color: #29262D;
-    font-family: 'Crimson Text', serif;
-  }
+<html lang="en">
 
-  p, ol, li {
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    color: #CCDBE1;
-  }
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-  h3{
-    color:#CCDBE1;
-  }
+        <title>Data Visualization Works | Yuhan's Portfolio</title>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,300,600,400' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Lora:400,400italic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/animsition.min.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
 
-  h2{
-    color:#CCDBE1;
-    font-size: 16px;
-    margin-left: 150px;
-    margin-right: 700px;
-    font-weight:300;
-  }
 
-  .axisLeft path{
-     stroke: #CCDBE1;
-     stroke-width: 1.5px;
-     opacity: .5;
-  }
 
-  .axisLeft line{
-    stroke: #CCDBE1;
-    stroke-width: 1.5px;
-    opacity: .5;
-  }
-  .axisLeft text{
-    font-family: 'Crimson Text', serif;
-    fill: #CCDBE1;
-  }
-  svg {
-    display: block;
-    margin: auto;
-  }
-</style>
-</head>
+        <link rel="shortcut icon" type="image/png" href="images/logo-shape.png"/>
 
-<body>
-<h3 style="margin-top: 70px; margin-left: 150px; margin-right: 50px">The Century of Movies</h3>
-<h2>The graph shows the average IMDb score of each decade from 1916-2016 compared with the overall average score, along with average facebook
- likes and average budget. The word clouds show popular movie genres in each decade.</h2>
-  <script>
-    // declare movieData outside the callback function
-    var movieData, decadeData, ttAvgScore;
-    // genreData[0] for genres; genreData[1] for frequencies; genreData[2] for decade labels
-    var genreData = [];
-    var svg = d3.select("body")
-                .append("svg")
-                .attr("width", 1200)
-                .attr("height", 700);
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <script type="text/javascript" src="js/modernizr.js"></script>
+        <script src="js/jquery.animsition.min.js"></script>
+    </head>
 
-    // callback function that takes in pass-in data
-    d3.json("movie.json", function(error, data) {
-      movieData = data;
-      // calculate the total average imdb score
-      ttAvgScore = d3.sum(data, function(d) {return d.imdb_score;})/data.length;
+    <body class="animsition">
+        <header class="project-page">
 
-      var i = 0, decadeStart = 0, decadeIndex = 0, tempGenre, tempIndex;
-      // traverse the whole movie dataset
-      while(i < movieData.length) {
-        // set up decade start within each round (10 years)
-        decadeStart = movieData[i].title_year;
-        // push in empty object into genreData to be modified later
-        genreData.push({decade:"", genre:[], freq:[]});
 
-        // set "decade" attribute for movies in current decade
-        while((i < movieData.length) && (movieData[i].title_year % decadeStart < 10)) {
-          // assign decade labels
-          movieData[i].decade = decadeStart + "-" + (decadeStart + 9);
+            <div id = "project-header">
+            
+                <div class="nav-icon">
+                                    <a href="index.html">
+                                    <img src="images/smalllogo.png"></a>
+                                </div>
+                <div class="nav-icon" id="previous-icon">
+                                    <a href="captivate.html">
+                                    <img src="images/previous-icon.png"></a>
+                                </div> 
+                <div class="nav-icon" id="next-icon">
+                                    <a href="shadow.html">
+                                    <img src="images/next-icon.png"></a>
+                                </div> 
+                
+                
+            </div>
 
-          // temporary container for each movie's genres, split by "|"
-          tempGenre = movieData[i].genres.split("|");
-          // traverse single movie's genres
-          tempGenre.forEach(function(d) {
-            // find if the genre existed in our database
-            tempIndex = genreData[decadeIndex].genre.indexOf(d);
-            // if no, then add it in
-            if(tempIndex == -1) {
-              genreData[decadeIndex].genre.push(d);
-              genreData[decadeIndex].freq.push(1);
-            }
-            // if yes, update corresponding frequency
-            else {
-              genreData[decadeIndex].freq[tempIndex]++;
-            }
-          });
-          // update to next movie
-          i++;
-        }
-        // record decade label in genreData
-        genreData[decadeIndex].decade = movieData[i-1].decade;
-        decadeIndex++;
-      };
 
-      // nest movie data into dacades
-      movieData = d3.nest()
-                    .key(function(d) { return d.decade; })
-                    .entries(movieData);
+        </header>
 
-      // calculate decade average data for our circle objects using d3.mean
-      decadeData = [{decade:0, avgScore:0, avgBudget:0, avgLike:0, topGenre:[], genreFreq:[]}];
-      for(i = 0; i < movieData.length; i++) {
-        decadeData[i] = ({decade: movieData[i].key,
-                          avgScore: d3.mean(movieData[i].values, function(d){return d.imdb_score;}),
-                          avgBudget: d3.mean(movieData[i].values, function(d){return d.budget;}),
-                          avgLike: d3.mean(movieData[i].values, function(d){return d.movie_facebook_likes;})})
-      };
 
-      // ordinal scale for circle's x coordinate, representing decades
-      var decadeScale = d3.scaleBand()
-                          .domain(decadeData.map(function(d) {return d.decade;}))
-                          .range([110, 1180]);
 
-      // scale for circle's y coordinate, representing decennial average imdb score
-      var scoreScale = d3.scaleLinear()
-                          .domain([0, 10])
-                          .range([360, 60]);
+        <section class="project-detail">
+            <div class="container">
+                <div class="project-title">
+                    Data Visualization Work
+                </div>
+                <div class="project-subtitle">
+                    Web-Based data visualization
+                </div>
 
-      // sqrt scale for circle size, representing average budget
-      var budgetScale = d3.scaleSqrt()
-                          .domain([0, d3.max(decadeData, function(d) {return d.avgBudget;})])
-                          .range([0, 55]);
-      // quantile scale for circle's color, representing avg. facebook like
-      var likeScale = d3.scaleQuantile()
-                    .domain(d3.range(0, 140, 20))
-                    .range(["#FFDC6D","#FFD13E","#FFB136","#FFA61B","#F76229","#EA4133"]);
 
-      // plot the dahs line representing total average score
-      svg.append("path")
-          .attr("d", "M50 " + scoreScale(ttAvgScore) + " L1150 " + scoreScale(ttAvgScore))
-          .attr("stroke", "#CCDBE1")
-          .attr("stroke-width", "1px")
-          .attr("stroke-opacity", .2)
-          .attr("stroke-dasharray", "5")
+                <div class="project-meta col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                    <div class="big-box no-padding-left no-padding-right">
+                        <div class="col-xs-12 col-sm-3 col-md-3">
+                            <h5>MY ROLES</h5>
+                            <p>Web Designer</p>
+                            <p>Front-end Developer</p>
+                            <p>Data Analyst</p>
+                        </div>
+                        <div class="col-xs-12 col-sm-3 col-md-3">
+                            <h5>DATE</h5>
+                            <p>Jan 2017 - May 2017</p>
+                        </div>
 
-      // plot each circle of decades of movies 
-      decadeData.forEach(function(d) {
-        svg.append("circle")
-            .attr("cx", decadeScale(d.decade))
-            .attr("cy", scoreScale(d.avgScore))
-            .attr("r", budgetScale(d.avgBudget))
-            .attr("fill", likeScale(Math.sqrt(d.avgLike)));
-        // plot decade labels
-        svg.append("text")
-            .text(d.decade)
-            .attr("x", decadeScale(d.decade))
-            .attr("y", scoreScale(d.avgScore) - budgetScale(d.avgBudget) - 20)
-            .attr("text-anchor", "middle")
-            .attr("alignment-baseline", "middle")
-            .style("font-size", "12px")
-            .style("fill","#CCDBE1");
-        // plot circle center
-        svg.append("circle")
-            .attr("cx", decadeScale(d.decade))
-            .attr("cy", scoreScale(d.avgScore))
-            .attr("r", 1.5)
-            .attr("fill", "#ff4600")
-            .attr("opacity", .9);
-        // plot vertical dash line for connecting circles with word clouds
-        svg.append("line")
-           .attr("x1",decadeScale(d.decade))
-           .attr("x2",decadeScale(d.decade))
-           .attr("y1",60)
-           .attr("y2",400)
-           .attr("stroke","#CCDBE1")
-           .attr("stroke-width",".6px")
-           .attr("stroke-opacity",0.2)
-           .attr("stroke-dasharray","5, 5" );
+                            <div class="col-xs-12 col-sm-3 col-md-3">
+                                <h5>Tools</h5>
+                                <p>D3</p>
+                                <p>HTML/CSS/JS</p>
+                            </div>
 
-      });
+                        <div class="col-xs-12 col-sm-3 col-md-3">
+                                <h5>Themes</h5>
+                                <p>Movies</p>
+                                <p>PokemonGo</p>
+                                <p>Paper Collaboration</p>
 
-      // plot line connecting each avgScore of decades (i.e. circle centers)
-      var pathGenerator = d3.line()
-                            .x(function(d) {return decadeScale(d.decade);})
-                            .y(function(d) {return scoreScale(d.avgScore);});
+                            </div>
+                        
+                    </div>
+                </div>
+                
+            <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                    <h3>1. The Century of Movies</h3>
+                </div>       
+            <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                 <img class="img-responsive" src="images/centuryofMovies.png">
+                </div>     
+            <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                    <div class="center-align">
+                        
+                            <button id="bubblebtn" type="button" class="btn-customized" style="width:180px;" onclick="window.open('DataVizMovie.html');">View Details</button>
+                    </div>
+                </div>
+                
+        <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                    <h3>2. Distribution of Pokemons in Manhattan</h3>
+                </div>       
+               
+             <div id="pokevideo" class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                <video width="840" height="567" autoplay loop>
+                      <source src="pokevideo.mov" type="video/mp4" />
+                </video>
+                </div>
+                
+                <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                    <div class="center-align">
+                        
+                            <button id="bubblebtn" type="button" class="btn-customized" style="width:180px;" onclick="window.open('pokemon.html');">Play with it!</button>
+                    </div>
+                </div>
+                
+                
 
-      var lines = svg.append("path")
-                      .attr("d",function(d) {
-                        return pathGenerator(decadeData);
-                      })
-                      .attr("stroke", "#CCDBE1")
-                      .attr("stroke-width", "1px")
-                      .attr("stroke-opacity", .5)
-                      .attr("stroke-linejoin", "round")
-                      .attr("fill", "none");
 
-      // word cloud color scale
-      var wordColorScale = d3.scaleLinear()
-                          .domain([0,1,2,3,4,5,6,10,15,20,100])
-                          .range(["#dbdbdb", "#d7d7d7", "#c3c3c3", "#afafaf", "#9b9b9b", "#878787", "#737373", "#5f5f5f", "#4b4b4b"]);
 
-      // function that plots each given word list into "cloud form", referencing http://bl.ocks.org/ericcoopey/6382449
-      function drawCloud(words) {
-        svg.append("g")
-        .attr("class", "wordcloud")
-        // word cloud's horizontal position depends on the decade it belongs to
-        .attr("transform", "translate(" + decadeScale(decadeData[words[0].decadeCount].decade) + "," + (scoreScale(decadeData[words[0].decadeCount].avgScore) + 180) + ")")
-        .selectAll("text")
-        .data(words)
-        .enter().append("text")
-        // adjust the font size scale accordingly to each decade's genre list's extent
-        .style("font-size", function(d) {return d3.scaleLinear().domain(d.freqExtent).range([5, 17])(d.freq) + "px";})
-        .style("fill", function(d, i) {return wordColorScale(i);})
-        .attr("transform", function(d) {
-            return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-        })
-        .text(function(d) {return d.genre;});
-      };
-      // for toggling decades
-      var decadeCount = 0;
-      // transform the genre and conresponding frequency/decade into array form for drawCloud function
-      genreData.forEach(function(decade) {
-        var temp = [{genre:"", freq:0, freqExtent:[], decadeCount:decadeCount}];
-        for(i = 0; i < decade.genre.length; i++) {
-          temp[i] = {genre:decade.genre[i], freq:decade.freq[i], freqExtent:d3.extent(decade.freq), decadeCount:decadeCount};
-        };
-        decadeCount++;
-        // call drawCloud for genre list
-        d3.layout.cloud().size([100, 200])
-                          .words(temp)
-                          .rotate(0)
-                          .fontSize(function(d) {return d3.scaleLinear().domain(d.freqExtent).range([5, 17])(d.freq);})
-                          .fontStyle(function(d) {return "fill: red";})
-                          .on("end", drawCloud)
-                          .start();
+        <footer>
+            <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                <div class = "footer-nav">
+                    
+                    <div id="project-nav-left">
+                        <p class="nav-title">Examing Public Speaking Anxiety</p>
+                        <p class="nav-subtitle">User Research + VR Design</p>
+                    </div>
+                      <div class="nav-icon" id="previous-icon">
+                                    <a href="Captivate.html">
+                                    <img src="images/previous-icon.png"></a>
+                                </div>
 
-      });
+                    <div id="project-nav-right">
+                        <p class="nav-title">Shadow</p>
+                        <p class="nav-subtitle">UX Design + Visual Design</p>
+                    </div>
+                      <div class="nav-icon" id="next-icon">
+                                    <a href="shadow.html">
+                                    <img src="images/next-icon.png"></a>
+                                </div>
 
-      //add rectangles for color transition/avg. facebook like explanation
-      var colorLegend = svg.append("g")
-                            .attr("class", "legend");
-      var colorLegendX = d3.scaleLinear()
-                .domain([0, 120])
-                .rangeRound([800, 1080]);
+                </div>
+            </div>
 
-      colorLegend.selectAll("rect")
-                  // take out each color range portion
-                  .data(likeScale.range().map(function(d) {
-                      d = likeScale.invertExtent(d);
-                      return d;
-                    }))
-                  .enter().append("rect")
-                    .attr("height", 12)
-                    // associate their position with a scaling function
-                    .attr("x", function(d) {return colorLegendX(d[0]);})
-                    .attr("y", 505)
-                    .attr("width", function(d) {return colorLegendX(d[1]) - colorLegendX(d[0]);})
-                    // associate their color with the likwScale itself
-                    .attr("fill", function(d) {return likeScale(d[0]);});
+        </footer>
 
-      likeScale.domain().forEach(function(d) {
-        svg.append("text")
-            .text(Math.pow(d, 2))
-            .attr("x", colorLegendX(d))
-            .attr("y", 525)
-            .attr("transform", "rotate(30 " + colorLegendX(d) + " " + 535 + " ) translate(-10, 5)")
-            .attr("font-size","12px")
-            .style("fill","#CCDBE1");
-      });
 
-      svg.append("text")
-          .text("avg. Facebook Likes")
-          .attr("x",890)
-          .attr("y", 500)
-          .attr("font-size","12px")
-          .style("fill","#CCDBE1");
 
-      // plot y axis for imdb score
-      svg.append("text")
-         .attr("x", 60)
-         .attr("y", 180)
-         .attr("font-size","12px")
-         .text("Average Score: " + ttAvgScore.toPrecision(4))
-         .style("fill","#CCDBE1");
 
-      // total average score tick on the axis
-      svg.append("path")
-          .attr("d", "M47.5 " + scoreScale(ttAvgScore) + " L52.5 " + scoreScale(ttAvgScore))
-          .attr("fill", "none")
-          .attr("stroke","#CCDBE1")
-          .attr("stroke-width","1.5px")
-          .attr("opacity","0.5");
 
-      // plot the axis
-      var imdbAxis = d3.axisLeft(scoreScale);
-      svg.append("g")
-         .attr("transform","translate(50,0)")
-         .call(imdbAxis)
-         .attr("class","axisLeft");
 
-      svg.append("text")
-         .text("IMDb Score")
-         .attr("x",130)
-         .attr("y",66)
-         .attr("font-size","12px")
-         .attr("transform", "rotate(-90 130 66) translate(-170, -110)")
-        .style("fill","#CCDBE1");
+        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript">
 
-      // plot budget size annotation
-      svg.append("text")
-         .text("(This legend is 20% of actual size.)")
-         .attr("x",47)
-         .attr("y",500)
-         .attr("font-size","12px")
-         .style("fill","#CCDBE1");
+        //page transitions
+            $(document).ready(function() {
 
-      svg.append("text")
-         .text("avg. Budget Min(243635.6)")
-         .attr("x",47)
-         .attr("y",520)
-         .attr("font-size","12px")
-         .style("fill","#CCDBE1");
+              $(".animsition").animsition({
 
-      svg.append("path")
-         .attr("d", "M187 518 L 293 518")
-         .style("stroke","#CCDBE1")
-         .style("stroke-width","1px")
-         .style("stroke-opacity","0.2");
+                inClass               :   'fade-in',
+                outClass              :   'fade-out',
+                inDuration            :    1500,
+                outDuration           :    800,
+                linkElement           :   '.animsition-link',
+                // e.g. linkElement   :   'a:not([target="_blank"]):not([href^=#])'
+                loading               :    true,
+                loadingParentElement  :   'body', //animsition wrapper element
+                loadingClass          :   'animsition-loading',
+                unSupportCss          : [ 'animation-duration',
+                                          '-webkit-animation-duration',
+                                          '-o-animation-duration'
+                                        ],
+                //"unSupportCss" option allows you to disable the "animsition" in case the css property in the array is not supported by your browser.
+                //The default setting is to disable the "animsition" in a browser that does not support "animation-duration".
 
-      svg.append("text")
-         .text("avg. Budget Max (47147715.3)")
-         .attr("x",323)
-         .attr("y",520)
-         .attr("font-size","12px")
-         .style("fill","#CCDBE1");
+                overlay               :   false,
 
-      // helper scale for ploting budget annotation, which is 20% of actual size
-      var budgetExplainScale = d3.scaleSqrt()
-                                  .domain([0, d3.max(decadeData, function(d) {return d.avgBudget;})])
-                                  .range([0, 24.596]);
+                overlayClass          :   'animsition-overlay-slide',
+                overlayParentElement  :   'body'
+              });
+            });
 
-      // four circles that shows how circle's size map to avg. budget
-      svg.append("circle")
-         .attr("cx",185)
-         .attr("cy",518)
-         .attr("r", budgetExplainScale(decadeData[0].avgBudget))
-         .attr("fill", "#ffca49");
 
-      svg.append("circle")
-         .attr("cx",210)
-         .attr("cy",518)
-         .attr("r", budgetExplainScale(decadeData[3].avgBudget))
-         .attr("fill", "#ffca49");
+        </script>
 
-       svg.append("circle")
-          .attr("cx", 245)
-          .attr("cy", 518)
-          .attr("r", budgetExplainScale(decadeData[6].avgBudget))
-          .attr("fill", "#ffca49");
-
-       svg.append("circle")
-          .attr("cx", 296)
-          .attr("cy", 518)
-          .attr("r", budgetExplainScale(decadeData[9].avgBudget))
-          .attr("fill", "#ffca49");
-    });
-  </script>
-  </p>
-</body>
+    </body>
+</html>

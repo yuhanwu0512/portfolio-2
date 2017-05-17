@@ -1,0 +1,1392 @@
+<html>
+
+<head>
+<title>Pokemons</title>
+<link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+<style>
+	body { font-family: "Muli", sans-serif; background-color: #FFD707;}
+	/*svg {border: solid #ccc 1px; }*/
+	path { fill: #0D46A3; opacity: 0.85;stroke: white; stroke-width: 1px;}
+	button { background-color: transparent; border: none;}
+	#weatherintro {
+		position: absolute;
+		left: 74%;
+		top: 26%;
+		font-size: 14px;
+		font-family: Roboto;
+		color: white;
+	}
+	#timeintro {
+		position: absolute;
+		left: 74%;
+		top: 45%;
+		font-size: 14px;
+		font-family: Roboto;
+		color: white;
+	}
+	#buttons {
+		position: absolute;
+		left: 74%;
+		top: 32%;
+	}
+
+	#logo {
+		position: absolute;;
+		left:30px;
+		top: 10px;
+	}
+
+	#intro{
+		position: absolute;
+		left: 20px;
+		top: 90px;
+		font-size: 13px;
+		font-family: Roboto;
+		color: #3664AD;
+	}
+	#battleintro {
+		position: absolute;
+		left: 74%;
+		top: 77%;
+		font-size: 14px;
+		font-family: Roboto;
+		color: white;
+	}
+	#searchintro {
+		position: absolute;
+		left: 74%;
+		top: 11%;
+		font-size: 14px;
+		font-family: Roboto;
+		color: white;
+	}
+	#map {
+		position: absolute;;
+		left:-2%;
+	}
+
+
+	#rim {
+		fill: none;
+		stroke: #999;
+		stroke-width: 3px;
+	}
+
+	.second-hand{
+		stroke-width:2;
+	}
+
+	.minute-hand{
+		stroke-width:4;
+		stroke-linecap:round;
+	}
+
+	.hour-hand{
+		stroke-width:6;
+		stroke: blue;
+		stroke-linecap:round;
+	}
+
+	.hands-cover{
+		stroke-width:3;
+		fill:#3664AD;
+	}
+
+	.second-tick{
+		stroke:white;
+		opacity:0.5;
+		stroke-width:2.5;
+		fill:#000;
+	}
+
+	.hour-tick{
+		stroke:white;
+		opacity:0.5;
+		stroke-width:4.2;
+	}
+
+	.second-label{
+		font-size: 8px;
+		font-style: white;
+		opacity:0.6;
+	}
+
+	.hour-label{
+		font-size: 14px;
+		font-style: white;
+	}
+
+	#clock{
+		position: absolute;
+		top:50%;
+		left:71%;
+		/*transform: scale(0.5);
+		transform-origin: left;*/
+	}
+
+	#timeinput{
+		position: absolute;
+		top:50%;
+		left:74%;
+	}
+
+	#vs{
+		position: absolute;
+		left:80%;
+		top:83%;
+	}
+
+	#gymsvg {
+		position: absolute;
+		left:74%;
+		top:82%;
+	}
+
+	#zoomin {
+		position: absolute;
+		left:140px;
+		top:180px;
+		cursor:pointer;
+	}
+	#zoomout {
+		position: absolute;
+		left:165px;
+		top:180px;
+		cursor:pointer;
+	}
+
+	#showall {
+		position: absolute;
+		left:74%;
+		top:4%;
+		font-family: Roboto;
+		font-size: 14px;
+		color:white;
+		stroke-width: 2;
+		padding: 3px 5px;
+    border: 2px solid white;
+		border-radius: 4px;
+	}
+
+	#search {
+		position: absolute;
+		left:74%;
+		top:16%;
+		font-family: Roboto;
+		font-size: 14px;
+		color:white;
+		stroke-width: 2;
+		/*padding: 3px 5px;*/
+    	border: 2px solid white;
+		border-radius: 4px;
+		height: 24;
+
+	}
+
+	input[type=range]{
+		 -webkit-appearance: none;
+	 }
+
+	 input[type=range]::-webkit-slider-runnable-track {
+		width: 300px;
+		height: 3px;
+		background: #ddd;
+		border: none;
+		border-radius: 3px;
+	 }
+
+	 input[type=range]::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		border: none;
+		height: 16px;
+		width: 16px;
+		border-radius: 50%;
+		background: #FFD707;
+		margin-top: -6px;
+	 }
+
+	 input[type=range]:focus {
+		outline: none;
+	 }
+
+	 #sidebar {
+		width:600px;
+		height: 1000px;
+		position: absolute;
+		left: 70%;
+		top: 0;
+		background-color: #0D46A3; opacity: 0.85;
+
+	 }
+
+	 #gym {
+		fill:white;
+	 }
+
+	 #divider{
+		position: absolute;
+		left:70%;
+		top:76%;
+	 }
+
+	 #text {
+		 background-color: transparent;
+		 border: none;
+		 font-family: Roboto;
+	 }
+
+	 #searchbutton {
+		 background-color: #FFD707;
+    border: none;
+    color: white;
+    padding: 3px 3px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+		font-family: Roboto;
+		height:25;
+
+	 }
+
+
+	 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: white;
+	opacity: 0.6;
+	font-size: 11;
+	font-family: Roboto;
+}
+
+</style>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/d3-array.v1.min.js"></script>
+<script src="https://d3js.org/d3-geo-projection.v1.min.js"></script>
+
+</head>
+
+<body>
+
+	<audio id="fireaudio" src="fire.mp3"></audio>
+	<rect id="sidebar"></rect>
+	<svg id="map" height="1000" width="1300">
+		<img id="zoomin"  src="zoomin.png" width="20" height="20" onclick="zoomIn()">
+		<img id="zoomout" src="zoomout.png" width="20" height="20" onclick="zoomOut()">
+		<img id="logo" src="Pokemon-logo.png" alt="logo" height="80" width="208">
+		<p id="intro">This interactive web shows the distribution of <br>Pokemons in New York Area in PokemonGo. <p>
+	</svg>
+
+	<p id="searchintro">Search the pokemon you want!</p>
+	<p id="weatherintro">See what weather will they show up</p>
+	<p id="timeintro">See what time will they show up</p>
+	<p id="battleintro">Drag two pokemons here and let them battle!</p>
+		<svg id="clock" height="500" width="500"></svg>
+	<div id="buttons">
+		<button id="clear"><img src="./weathericon/clear1x.png" style="width:50px;height:50px;"></button>
+		<button id="cloudy"><img src="./weathericon/cloudy1x.png" style="width:50px;height:50px;"></button>
+		<button id="drizzle"><img src="./weathericon/rain1x.png" style="width:50px;height:50px;"></button>
+		<button id="breezy"><img src="./weathericon/snow1x.png" style="width:50px;height:50px;"></button>
+	</div>
+	<svg id="gymsvg" width="400" height="330">
+	<rect id="gym" width="250" height="130" style="fill:none;stroke-width:2;stroke:white" />
+	<img id="vs" src="vs.png" alt="vs" height="100"  width="80">
+	<circle cx="30" cy="30" r="30"></circle>
+	</svg>
+
+	<input type="range" id="timeinput" min=0 max=24 style="width:170px"/><br>
+	<form id="search" onsubmit="getSearchedName(this); return false;">
+		<input id="text" type="text" name="pokemonsearch" placeholder="Type in a Pokemon name..." width=400>
+		<input id="searchbutton" type="button" value="Search" onclick="getSearchedName(this.form)">
+	</form>
+	<button id="showall">Show all Pokemons</button>
+	<svg id="divider" height="210" width="500">
+		<line x1="0" y1="0" x2="400" y2="0" style="stroke:#FFD707;stroke-width:6" />
+	</svg>
+
+
+	<script>
+		var svg = d3.select("#map");
+		var projection;
+		var mapData;
+		var imgData, weatherTimeData, statsData;
+
+		var width=900;
+		var height=900;
+
+		////clock code is inspired from http://bl.ocks.org/tomgp/6475678
+		var radians = 0.0174532925,
+			clockRadius = 60,
+			hourHandLength = 2*clockRadius/4,
+			minuteHandLength = clockRadius-13,
+			secondHandLength = clockRadius-13,
+			secondHandBalance = 10,
+			secondTickStart = clockRadius;
+			secondTickLength = -5,
+			hourTickStart = clockRadius,
+			hourTickLength = -8,
+			secondLabelRadius = clockRadius + 10;
+			secondLabelYOffset = 5
+			hourLabelRadius = clockRadius - 15,
+			hourLabelYOffset = 7;
+
+		var hourScale = d3.scaleLinear()
+			.range([0,330])
+			.domain([0,11]);
+
+		var minuteScale = secondScale = d3.scaleLinear()
+			.range([0,354])
+			.domain([0,59]);
+
+		var handData = [
+			{
+				type:'hour',
+				value:0,
+				length:-hourHandLength,
+				scale:hourScale
+			},
+			{
+				type:'minute',
+				value:0,
+				length:-minuteHandLength,
+				scale:minuteScale
+			},
+			{
+				type:'second',
+				value:0,
+				length:-secondHandLength,
+				scale:secondScale,
+				balance:secondHandBalance
+			}
+		];
+
+		var hr, min;
+        var backgroundColor = d3.scaleLinear().domain([24,12,0])
+            .interpolate(d3.interpolateRgb).range(["black", "#FFD707","black"]);
+		var currentzoom=0;
+		var zoomed=false;
+
+		loadMap(currentzoom);
+
+		//reference: http://bl.ocks.org/eesur/4e0a69d57d3bfc8a82c2
+		d3.selection.prototype.moveToBack = function() {
+	        return this.each(function() {
+	            var firstChild = this.parentNode.firstChild;
+	            if (firstChild) {
+	                this.parentNode.insertBefore(this, firstChild);
+	            }
+	        });
+	    };
+
+	    d3.selection.prototype.moveToFront = function() {
+			return this.each(function(){
+				this.parentNode.appendChild(this);
+			});
+		};
+
+	    d3.select("#gymsvg").moveToBack();
+
+		function loadMap(currentzoom){
+
+			if(hr==null && min==null){
+				var t = new Date();
+				hr=t.getHours();
+				min=t.getMinutes();
+			}
+
+			d3.json("nyc.json", function(json){
+
+				if(!zoomed){
+					projection = d3.geoMercator().fitExtent([[0, 10], [880, 800]], json);
+				}else{
+					if(currentzoom==0){
+						projection = d3.geoMercator().fitExtent([[0, 10], [880, 800]], json);
+					}else if(currentzoom==1){
+						projection = d3.geoMercator().fitExtent([[-500, -20], [1280, 1200]], json);
+					}else if(currentzoom==2){
+						projection = d3.geoMercator().fitExtent([[-1000, -00], [1780, 1700]], json);
+					}else if(currentzoom==3){
+						projection = d3.geoMercator().fitExtent([[-1900, -900], [2480, 2500]], json);
+					}
+
+					svg.selectAll("image").remove();
+					if(allpokemons){
+						showAllPokemons(pokemons);
+					}else{
+						showPokemon(pokemons, hr, min);
+					}
+				}
+
+				var pathGenerator = d3.geoPath().projection(projection);
+
+				svg.selectAll("path").remove();
+
+				svg.selectAll("path")
+				.data(json.features)
+				.enter()
+				.append("path")
+				.attr("d", pathGenerator)
+				.moveToBack();
+
+			});
+		}
+
+		function zoomIn(){
+			currenttranslation=[0,0];
+			previoustranslation=[0,0];
+			if(currentzoom<3){
+				zoomed=true;
+				currentzoom++;
+				loadMap(currentzoom);
+			}else{
+				currentzoom=3;
+			}
+		}
+
+		function zoomOut(){
+			currenttranslation=[0,0];
+			previoustranslation=[0,0];
+			if(currentzoom>0){
+				zoomed=true;
+				currentzoom--;
+				loadMap(currentzoom);
+			}else{
+				currentzoom=0;
+			}
+		}
+
+		d3.select("#map")
+		.call(d3.drag()
+				.on("start", dragstartedmap)
+				.on("drag", draggedmap)
+				.on("end", dragendedmap));
+
+		var startingX=0, startingY=0;
+		var coordinates=[];
+		var newtranslation=[0,0];
+		var currenttranslation=[0,0];
+		var previoustranslation=[0,0];
+
+		function dragstartedmap(d) {
+			d3.event.sourceEvent.stopPropagation();
+			this.setAttribute("cursor", "move");
+			coordinates = d3.mouse(this);
+			startingX = coordinates[0];
+			startingY = coordinates[1];
+		}
+
+		function draggedmap(d) {
+			if(currentzoom>0){
+				coordinates = d3.mouse(this);
+				newtranslation=[coordinates[0]-startingX, coordinates[1]-startingY]
+				currenttranslation[0]=newtranslation[0]+previoustranslation[0];
+				currenttranslation[1]=newtranslation[1]+previoustranslation[1];
+				svg.selectAll("path").attr("transform", "translate(" + currenttranslation[0] + ", " + currenttranslation[1] + ")");
+				svg.selectAll("image").attr("transform", "translate(" + currenttranslation[0] + ", " + currenttranslation[1] + ")");
+			}
+
+		}
+
+		function dragendedmap(d) {
+			this.setAttribute("cursor", "default");
+			previoustranslation=[currenttranslation[0], currenttranslation[1]];
+		}
+
+		var parseRowImg = function(line) {
+			return{
+				PokemonNo: Number(line["Pokemon No."]),
+				Name: line["Name"],
+				ImgURL: line["Image URL"],
+			}
+		};
+
+		var parseRowWeatherTime = function(line) {
+			return{
+				PokemonNo: Number(line["pokemonId"]),
+				Latitude: Number(line["latitude"]),
+				Longitude: Number(line["longitude"]),
+				TimeOfDay: line["appearedTimeOfDay"],
+				Hour: Number(line["appearedHour"]),
+				Minute: Number(line["appearedMinute"]),
+				City: line["city"],
+				Weather: line["weather"],
+				Population: Number(line["population_density"]),
+			}
+		};
+
+		var parseRowStats = function(line) {
+			return{
+				PokemonNo: Number(line["#"]),
+				Name: line["Name"],
+				Type1: line["Type1"],
+				Type2: line["Type2"],
+				Total: Number(line["Total"]),
+				HP: Number(line["HP"]),
+				Attack: Number(line["Attack"]),
+				Defense: Number(line["Defense"]),
+				SpeedAtk: Number(line["Sp. Atk"]),
+				SpeedDef: Number(line["Sp. Def"]),
+				Speed: Number(line["Speed"]),
+				Legendary: line["Legendary"],
+			}
+		};
+
+		var pokemons;
+
+		d3.queue()
+		.defer(d3.csv, "pokemon-images.csv", parseRowImg)
+		.defer(d3.csv, "pokemon-weather-time-nyc.csv", parseRowWeatherTime)
+		.defer(d3.csv, "pokemon-stats.csv", parseRowStats)
+		.await(function(error, imgdata, weatherdata, statsdata){
+			imgData = imgdata;
+			weatherTimeData = weatherdata;
+			statsData = statsdata;
+			pokemons = dataPoints(imgdata, weatherdata, statsdata);
+			var t = new Date();
+			var currenthr=t.getHours();
+			var currentmin=t.getMinutes();
+			document.getElementById("timeinput").step=1/60;
+			document.getElementById("timeinput").value=currenthr+(currentmin/60);
+			allpokemons=true;
+			showAllPokemons(pokemons);
+		});
+
+		d3.select("#showall")
+		.on("click", function(){
+			allpokemons=true;
+			weatherchange=false;
+			timechange=false;
+			timetoggle=false;
+			svg.selectAll("image").remove().transition();
+			showAllPokemons(pokemons);
+		});
+
+		d3.select("#timeinput")
+		.on("input", function() {
+			var time=+this.value;
+			hr=Math.floor(time);
+			min=Math.ceil((time%1)*60);
+			updateData();
+			moveHands();
+			svg.selectAll("image").remove().transition();
+			allpokemons=false;
+			if(searching){
+				showSearchedPokemon(pokemons, searchedpokemon);
+			}else{
+				showPokemon(pokemons, hr, min);
+			}
+            d3.select("body").style("background-color", backgroundColor(hr));
+            // svg.style("background-color", backgroundColor(hr));
+		});
+
+		var dataPoints = function(imgdata, weatherdata, statsdata){
+			var points = [];
+			weatherdata.forEach(function(data){
+				if((data.Longitude>-74.2 && data.Longitude<-74.05 && data.Latitude<40.6 && data.Latitude>40.5) || (data.Longitude>-74 && data.Longitude<-73.8 && data.Latitude<40.9)){
+					var coordinate=[data.Longitude, data.Latitude];
+					var timeOfDay=data.TimeOfDay;
+					var hour=data.Hour;
+					var minute=data.Minute;
+					var weather=data.Weather;
+
+					var totalPower, hp, atk, def;
+
+					statsdata.forEach(function(stats){
+						if(stats.PokemonNo==data.PokemonNo){
+							totalPower=stats.Total;
+							hp=stats.HP;
+							atk=stats.Attack;
+							def=stats.Defense;
+							type1 = stats.Type1;
+							type2 = stats.Type2;
+							speed = stats.Speed;
+							return true;
+						}
+					});
+
+					var imgURL, name;
+					imgData.forEach(function(img){
+						if(img.PokemonNo==data.PokemonNo){
+							imgURL=img.ImgURL;
+							name=img.Name;
+							return true;
+						}
+					});
+
+					var point={pokemonNo: data.PokemonNo, name: name, imgURL: imgURL, coordinate: coordinate, timeOfDay: timeOfDay, hour: hour, minute: minute, weather: weather, speed: speed, total: totalPower, HP: hp, attack: atk, defense: def, type1: type1, type2:type2 };
+
+					points.push(point);
+				}
+			});
+
+			return points;
+		}
+
+		var pokemon1, pokemon2;
+		var numpokemons=0;
+
+		var currentweather="Clear";
+
+		function showPokemon(pokemons, hour, minute) {
+			allpokemons=false;
+
+			var minhr, maxhr, minminute, maxminute;
+			if(minute<15){
+				if(hour==0){
+					minhr=23;
+				}else{
+					minhr=hour-1;
+				}
+				maxhr=hour;
+				minminute=60-(15-minute);
+				maxminute=minute+15;
+			}else if(minute>=15 && minute<45){
+				minhr=hour;
+				minminute=minute-15;
+				maxhr=hour;
+				maxminute=minute+15;
+			}else{
+				if(hour==23){
+					maxhr=0;
+				}else{
+					maxhr=hour+1;
+				}
+				minhr=hour;
+				minminute=minute-15;
+				maxminute=minute-45;
+			}
+
+
+			svg.selectAll("image")
+			.data(pokemons.filter(function(d) {
+				return ((d.hour==minhr && d.minute>=minminute) || (d.hour==maxhr && d.minute<=maxminute)) && d.weather==currentweather;
+			}))
+			.enter().append("image")
+			.attr("id", function(d){var latitude=d.coordinate[1].toString().replace(".", ""); return d.name+""+latitude;})
+			.attr("class", function(d){return "pokemon "+d.weather+" "+d.timeOfDay;})
+			.attr("x", function(d){return projection(d.coordinate)[0];})
+			.attr("y", function(d){return projection(d.coordinate)[1];})
+			.attr("height", 20)
+			.attr("width", 20)
+			.attr("href", function(d){return d.imgURL;})
+			.classed("draggable", "true")
+			.attr("opacity", 0.8)
+			.attr("transform", "translate(" + currenttranslation[0] + ", " + currenttranslation[1] + ")")
+			.on("mouseover", function(d){
+				this.setAttribute("opacity", 1.0);
+				this.setAttribute("cursor", "pointer");
+				showBio(d);
+			})
+			.on("mouseout", function(d){
+				this.setAttribute("opacity", 0.8);
+				this.setAttribute("cursor", "default");
+				hideBio(d);
+			})
+			.call(d3.drag()
+				.on("start", function(d){
+					hideBio(d);
+					dragstarted(d);})
+				.on("drag", dragged)
+				.on("end", dragended));
+		}
+
+		var allpokemons=false;
+		var weatherchange=false;
+
+		function showAllPokemons(pokemons){
+			allpokemons=true;
+			searching=false;
+			svg.selectAll("image")
+			.data(pokemons)
+			.enter().append("image")
+			.attr("id", function(d){var latitude=d.coordinate[1].toString().replace(".", ""); return d.name+""+latitude;})
+			.attr("class", function(d){return d.weather+" "+d.timeOfDay;})
+			.attr("x", function(d){return projection(d.coordinate)[0];})
+			.attr("y", function(d){return projection(d.coordinate)[1];})
+			.attr("height", 20)
+			.attr("width", 20)
+			.attr("href", function(d){return d.imgURL;})
+			.classed("draggable", "true")
+			.attr("opacity", 0.8)
+			.attr("transform", "translate(" + currenttranslation[0] + ", " + currenttranslation[1] + ")")
+			.on("mouseover", function(d){
+				this.setAttribute("opacity", 1.0);
+				this.setAttribute("cursor", "pointer");
+				showBio(d);
+			})
+			.on("mouseout", function(d){
+				this.setAttribute("opacity", 0.8);
+				this.setAttribute("cursor", "default");
+				hideBio(d);
+			})
+			.call(d3.drag()
+				.on("start", function(d){
+					hideBio(d);
+					dragstarted(d);})
+				.on("drag", dragged)
+				.on("end", dragended));
+
+			if(weatherchange){
+				svg.selectAll("image").style("opacity", 0);
+				svg.selectAll("."+currentweather).style("opacity", 0.8);
+			}
+		}
+
+		var searching=false;
+		var searchedpokemon="";
+
+		function getSearchedName(form){
+			searchedpokemon=form.pokemonsearch.value.toLowerCase();
+			showSearchedPokemon(pokemons, searchedpokemon);
+		}
+
+		function showSearchedPokemon(pokemons, searchedpokemon){
+			searching=true;
+			allpokemons=false;
+
+			var minhr, maxhr, minminute, maxminute;
+
+			if(hr==null && min==null){
+				var t = new Date();
+				hr=t.getHours();
+				min=t.getMinutes();
+			}
+
+			if(min<15){
+				if(hr==0){
+					minhr=23;
+				}else{
+					minhr=hr-1;
+				}
+				maxhr=hr;
+				minminute=60-(15-min);
+				maxminute=min+15;
+			}else if(min>=15 && min<45){
+				minhr=hr;
+				minminute=min-15;
+				maxhr=hr;
+				maxminute=min+15;
+			}else{
+				if(hr==23){
+					maxhr=0;
+				}else{
+					maxhr=hr+1;
+				}
+				minhr=hr;
+				minminute=min-15;
+				maxminute=min-45;
+			}
+
+			svg.selectAll("image").remove();
+
+			svg.selectAll("image")
+			.data(pokemons.filter(function(d) {
+				return searchedpokemon==d.name.toLowerCase() && ((d.hour==minhr && d.minute>=minminute) || (d.hour==maxhr && d.minute<=maxminute)) && d.weather==currentweather;
+			}))
+			.enter().append("image")
+			.attr("id", function(d){var latitude=d.coordinate[1].toString().replace(".", ""); return d.name+""+latitude;})
+			.attr("class", function(d){return d.weather+" "+d.timeOfDay;})
+			.attr("x", function(d){return projection(d.coordinate)[0];})
+			.attr("y", function(d){return projection(d.coordinate)[1];})
+			.attr("height", 20)
+			.attr("width", 20)
+			.attr("href", function(d){return d.imgURL;})
+			.classed("draggable", "true")
+			.attr("opacity", 0.8)
+			.attr("transform", "translate(" + currenttranslation[0] + ", " + currenttranslation[1] + ")")
+			.on("mouseover", function(d){
+				this.setAttribute("opacity", 1.0);
+				this.setAttribute("cursor", "pointer");
+				showBio(d);
+			})
+			.on("mouseout", function(d){
+				this.setAttribute("opacity", 0.8);
+				this.setAttribute("cursor", "default");
+				hideBio(d);
+			})
+			.call(d3.drag()
+				.on("start", function(d){
+					hideBio(d);
+					dragstarted(d);})
+				.on("drag", dragged)
+				.on("end", dragended));
+		}
+
+		function drawClock(){ //create all the clock elements
+			updateData();	//draw them in the correct starting position
+
+			var svgclock=d3.select("#clock");
+
+			var face = svgclock.append('g')
+			.attr('id','clock-face')
+			.attr('transform','translate(' + (clockRadius + 50) + ',' + (clockRadius + 50) + ')');
+
+			//add marks for seconds
+			face.selectAll('.second-tick')
+			.data(d3.range(0,60)).enter()
+				.append('line')
+				.attr('class', 'second-tick')
+				.attr('x1',0)
+				.attr('x2',0)
+				.attr('y1',secondTickStart)
+				.attr('y2',secondTickStart + secondTickLength)
+				.attr('transform',function(d){
+					return 'rotate(' + secondScale(d) + ')';
+				});
+			//and labels
+			face.selectAll('.second-label')
+			.data(d3.range(5,61,5))
+			.enter()
+			.append('text')
+			.attr('class', 'second-label')
+			.attr('text-anchor','middle')
+			.attr('x',function(d){
+				return secondLabelRadius*Math.sin(secondScale(d)*radians);
+			})
+			.attr('y',function(d){
+				return -secondLabelRadius*Math.cos(secondScale(d)*radians) + secondLabelYOffset;
+			})
+			.text(function(d){
+				return d;
+			});
+
+			//and hours
+			face.selectAll('.hour-tick')
+			.data(d3.range(0,12)).enter()
+			.append('line')
+			.attr('class', 'hour-tick')
+			.attr('x1',0)
+			.attr('x2',0)
+			.attr('y1',hourTickStart)
+			.attr('y2',hourTickStart + hourTickLength)
+			.attr('transform',function(d){
+				return 'rotate(' + hourScale(d) + ')';
+			});
+
+			face.selectAll('.hour-label')
+			.data(d3.range(3,13,3))
+			.enter()
+			.append('text')
+			.attr('class', 'hour-label')
+			.attr('text-anchor','middle')
+			.attr('x',function(d){
+				return hourLabelRadius*Math.sin(hourScale(d)*radians);
+			})
+			.attr('y',function(d){
+				return -hourLabelRadius*Math.cos(hourScale(d)*radians) + hourLabelYOffset;
+			})
+			.text(function(d){
+				return d;
+			});
+
+
+			var hands = face.append('g').attr('id','clock-hands');
+
+			face.append('g').attr('id','face-overlay')
+			.append('circle').attr('class','hands-cover')
+			.attr('x',0)
+			.attr('y',0)
+			.attr('r',clockRadius/20)
+			.style("stroke", "black");
+
+			hands.selectAll('line')
+			.data(handData)
+			.enter()
+			.append('line')
+			.attr('class', function(d){
+				return d.type + '-hand';
+			})
+			.attr('x1',0)
+			.attr('y1',function(d){
+				return d.balance ? d.balance : 0;
+			})
+			.attr('x2',0)
+			.attr('y2',function(d){
+				return d.length;
+			})
+			.attr('transform',function(d){
+				return 'rotate('+ d.scale(d.value) +')';
+			})
+			.style("stroke", "black");
+		}
+
+		function moveHands(){
+			d3.select('#clock-hands').selectAll('line')
+			.data(handData)
+			.transition()
+			.attr('transform',function(d){
+				return 'rotate('+ d.scale(d.value) +')';
+			});
+
+		}
+
+		function updateData(){
+			if(hr==null && min==null){
+				var t = new Date();
+				handData[0].value = (t.getHours() % 12) + t.getMinutes()/60 ;
+				handData[1].value = t.getMinutes();
+				handData[2].value = t.getSeconds();
+			}else{
+				var t = new Date();
+				handData[0].value = hr % 12 + min/60;
+				handData[1].value = min;
+				handData[2].value = t.getSeconds();
+			}
+		}
+
+		drawClock();
+
+		setInterval(function(){
+			updateData();
+			moveHands();
+		}, 1000);
+
+		function showBio(d){
+
+			svg.append("image")
+			.attr("id","bio")
+			.attr("x",d3.event.clientX-320)
+			.attr("y", d3.event.clientY-200)
+			.attr("height", 550)
+			.attr("width", 253)
+			.attr("xlink:href", "cardback.png");
+
+			svg.append("text")
+			.attr("id","name")
+			.attr("x",d3.event.clientX-320+8)
+			.attr("y",d3.event.clientY+26)
+			.text("Name: " + d.name)
+			.attr("font-family","Roboto")
+			.attr("font-size","14px");
+
+			svg.append("text")
+			.attr("id","type1")
+			.attr("x",d3.event.clientX-320+8)
+			.attr("y",d3.event.clientY+44)
+			.text("Type1: " + d.type1)
+			.attr("font-family","Roboto")
+			.attr("font-size","14px");
+
+			svg.append("text")
+			.attr("id","type2")
+			.attr("x",d3.event.clientX-320+8)
+			.attr("y",d3.event.clientY+58+4)
+			.text("Type2: " + d.type2)
+			.attr("font-family","Roboto")
+			.attr("font-size","14px");
+
+			svg.append("text")
+			.attr("id","attack")
+			.attr("x",d3.event.clientX-320+8)
+			.attr("y",d3.event.clientY+76+4)
+			.text("Attack: " + d.attack)
+			.attr("font-family","Roboto")
+			.attr("font-size","14px");
+
+			svg.append("text")
+			.attr("id","defense")
+			.attr("x",d3.event.clientX-320+8)
+			.attr("y",d3.event.clientY+94+4)
+			.text("Defense: " + d.defense)
+			.attr("font-family","Roboto")
+			.attr("font-size","14px");
+
+			svg.append("text")
+			.attr("id","speed")
+			.attr("x",d3.event.clientX-320+8)
+			.attr("y",d3.event.clientY+112+4)
+			.text("Speed: " + d.speed)
+			.attr("font-family","Roboto")
+			.attr("font-size","14px");
+
+			svg.append("text")
+			 .attr("id","total")
+			 .attr("x",d3.event.clientX-320+8)
+			 .attr("y",d3.event.clientY+130+6)
+			 .text("Total Power: " + d.total)
+			 .attr("font-family","Roboto")
+			 .attr("font-size","14px");
+
+			svg.append("image")
+				.attr("id","bigimg")
+				.attr("x",d3.event.clientX-163)
+				.attr("y", d3.event.clientY-6)
+				.attr("height", 150)
+				.attr("width", 90)
+				.attr("href", d.imgURL);
+		}
+
+		function hideBio(d){
+			d3.select("#bio").remove();
+			d3.select("#name").remove();
+			d3.select("#type1").remove();
+			d3.select("#type2").remove();
+			d3.select("#attack").remove();
+			d3.select("#defense").remove();
+			d3.select("#speed").remove();
+			d3.select("#total").remove();
+			d3.select("#bigimg").remove();
+		}
+
+
+		function clear_clicked(){
+			if(weatherchange && currentweather=="Clear"){
+				weatherchange=false;
+				svg.selectAll("image").style("opacity", 0.8);
+				d3.select("#clear").style("opacity", 0.6);
+			}else{
+				svg.selectAll("image").style("opacity", 0);
+				svg.selectAll(".Clear").style("opacity", 0.8);
+				currentweather="Clear";
+				weatherchange=true;
+				d3.select("#clear").style("opacity", 1);
+				d3.select("#cloudy").style("opacity", 0.6);
+				d3.select("#drizzle").style("opacity", 0.6);
+				d3.select("#breezy").style("opacity", 0.6);
+			}
+		}
+		function cloudy_clicked(){
+			if(weatherchange && currentweather=="Overcast"){
+				weatherchange=false;
+				svg.selectAll("image").style("opacity", 0.8);
+				d3.select("#cloudy").style("opacity", 0.6);
+			}else{
+				svg.selectAll("image").style("opacity", 0);
+				svg.selectAll(".Overcast").style("opacity", 0.8);
+				currentweather="Overcast";
+				weatherchange=true;
+				d3.select("#cloudy").style("opacity", 1);
+				d3.select("#clear").style("opacity", 0.6);
+				d3.select("#drizzle").style("opacity", 0.6);
+				d3.select("#breezy").style("opacity", 0.6);
+			}
+		}
+		function drizzle_clicked(){
+			if(weatherchange && currentweather=="Drizzle"){
+				weatherchange=false;
+				svg.selectAll("image").style("opacity", 0.8);
+				d3.select("#drizzle").style("opacity", 0.6);
+			}else{
+				svg.selectAll("image").style("opacity", 0);
+				svg.selectAll(".Drizzle").style("opacity", 0.8);
+				currentweather="Drizzle";
+				weatherchange=true;
+				d3.select("#drizzle").style("opacity", 1);
+				d3.select("#clear").style("opacity", 0.6);
+				d3.select("#cloudy").style("opacity", 0.6);
+				d3.select("#breezy").style("opacity", 0.6);
+			}
+		}
+		function breezy_clicked(){
+			if(weatherchange && currentweather=="Breezy"){
+				weatherchange=false;
+				svg.selectAll("image").style("opacity", 0.8);
+				d3.select("#breezy").style("opacity", 0.6);
+			}else{
+				svg.selectAll("image").style("opacity", 0);
+				svg.selectAll(".Breezy").style("opacity", 0.8);
+				currentweather="Breezy";
+				weatherchange=true;
+				d3.select("#breezy").style("opacity", 1);
+				d3.select("#clear").style("opacity", 0.6);
+				d3.select("#cloudy").style("opacity", 0.6);
+				d3.select("#drizzle").style("opacity", 0.6);
+			}
+		}
+
+		d3.select("#clear").on("click", clear_clicked);
+		d3.select("#cloudy").on("click", cloudy_clicked);
+		d3.select("#drizzle").on("click", drizzle_clicked);
+		d3.select("#breezy").on("click", breezy_clicked);
+
+		//reference: https://bl.ocks.org/mbostock/22994cc97fefaeede0d861e6815a847e
+		function dragstarted(d) {
+			d3.select("#gym").style("stroke", "yellow");
+
+			svg.append("rect")
+			.attr("id","draghighlight")
+			.attr("x", (width/2)-225+150)
+			.attr("y", 20)
+			.attr("rx", 20)
+			.attr("ry", 20)
+			.attr("height", 30)
+			.attr("width", 470)
+			.style("fill", "white")
+			.style("stroke", "#dcdcdc")
+			.style("opacity", 0.7);
+
+			svg.append("text")
+			.attr("id", "dragtext")
+			.attr("x", 150+width/2)
+			.attr("y", 40)
+			.style("text-anchor","middle")
+			.style("font-family","Muli")
+			.style("font-size", 16)
+			.style("fill", "#3c3c3c")
+			.text("drag two pokemons to the gym to compare their battle stats")
+			.style("font-family","Roboto");
+		}
+
+		function dragged(d) {
+			d3.select(this)
+			.attr("transform", "translate(0,0)")
+			.attr("x", d3.event.x).attr("y", d3.event.y)
+			.attr("opacity", 1)
+			.attr("width", "60")
+			.attr("height", "60")
+			.moveToFront();
+		}
+
+		function dragended(d) {
+			d3.select(this).classed("active", false);
+			d3.select("#gym").style("stroke", "black");
+			hideBio(d);
+
+			d3.select("#draghighlight").remove();
+			d3.select("#dragtext").remove();
+
+			d3.select(this).attr("width", "20")
+			.attr("height", "20")
+			.attr("transform", "translate(" + currenttranslation[0] + ", " + currenttranslation[1] + ")");
+
+			if(!(d3.event.x>895 && d3.event.y>=240)){
+				if(pokemon1==d){
+					numpokemons=0;
+					pokemon1=null;
+				}else if(pokemon2==d){
+					numpokemons=1;
+					pokemon2=null;
+				}
+				d3.select(this)
+				.attr("x", projection(d.coordinate)[0])
+				.attr("y", projection(d.coordinate)[1])
+				.attr("opacity", 0.8);
+			}else{
+				numpokemons++;
+				if(numpokemons==1){
+					pokemon1=d;
+					d3.select(this)
+					.attr("transform", "translate(0,0)")
+					.attr("opacity", 1)
+					.attr("width", "60")
+					.attr("height", "60")
+					.moveToFront();
+				}else if(numpokemons==2){
+					numpokemons=0;
+					pokemon2=d;
+					var latitude=pokemon1.coordinate[1].toString().replace(".", "");
+					d3.select(this).attr("x", projection(d.coordinate)[0]).attr("y", projection(d.coordinate)[1]).attr("width",20).attr("height",20);
+					d3.select("#"+pokemon1.name+""+latitude).attr("x", projection(pokemon1.coordinate)[0]).attr("y", projection(pokemon1.coordinate)[1]).attr("width",20).attr("height",20);
+					showBattle(pokemon1, pokemon2);
+				}
+			}
+		}
+
+		function showBattle(pokemon1, pokemon2){
+      		document.getElementById("fireaudio").play();
+			document.getElementById("fireaudio").loop=true;
+
+			svg.append("g").attr("id", "popup");
+
+			var biopopup = d3.select("#popup");
+
+			var width=1300;
+			var height=810;
+
+			biopopup.append("rect")
+			.attr("id","tempbg")
+			.attr("x", width/5 + 50)
+			.attr("y", height/5)
+			.attr("height", 425)
+			.attr("width", 500)
+			.attr("rx",10)
+			.attr("ry",10)
+			.style("fill", "white")
+			.style("stroke","#325C8B")
+			.style("stroke-width",5);
+
+			biopopup.append("image")
+			.attr("id", "fire")
+			.attr("x", width/5 + 50 + 130)
+			.attr("y", height/5 - 70)
+			.attr("height", 400)
+			.attr("width", 230)
+			.attr("href", "fire2.gif");
+
+			biopopup.append("image")
+			.attr("id", "vss")
+			.attr("x", width/5 + 50 + 215)
+			.attr("y", height/5 + 120)
+			.attr("height", 100)
+			.attr("width", 70)
+			.attr("href", "vs.png");
+
+			biopopup.append("image")
+			.attr("id", "pokemon1")
+			.attr("x", width/5 + 60)
+			.attr("y", height/5 + 60)
+			.attr("height", 200)
+			.attr("width", 180)
+			.attr("href", function(d){return pokemon1.imgURL;});
+
+			biopopup.append("image")
+			.attr("id", "pokemon2")
+			.attr("x", width/5 + 360)
+			.attr("y", height/5 + 60)
+			.attr("height", 200)
+			.attr("width", 180)
+			.attr("href", function(d){return pokemon2.imgURL;});
+
+			biopopup.append("image")
+			.attr("id", "close")
+			.attr("x", width/5+60)
+			.attr("y", height/5+10)
+			.attr("width",30)
+			.attr("height",30)
+			.style("text-anchor","middle")
+			.attr("href","close.png")
+			.on("mouseover", function(){
+				this.setAttribute("cursor", "pointer");
+			})
+			.on("click", removePopup);
+
+			biopopup.append("text")
+			.attr("id","name1")
+			.attr("x", width/5+150)
+			.attr("y", height/5+60)
+			.text(pokemon1.name)
+			.attr('text-anchor','middle')
+			.attr("font-family","Roboto")
+			.attr("font-size","20px");
+
+			biopopup.append("text")
+			.attr("id","name2")
+			.attr("x", width/5+450)
+			.attr("y", height/5+60)
+			.text(pokemon2.name)
+			.attr('text-anchor','middle')
+			.attr("font-family","Roboto")
+			.attr("font-size","20px");
+
+			biopopup.append("text")
+			.attr("id","type1")
+			.attr("x", width/5+100)
+			.attr("y", height/5+270)
+			.text("Type1: " + pokemon1.type1)
+			.attr("font-family","Roboto")
+			.attr("font-size","14px");
+
+			biopopup.append("text")
+			.attr("id","type1")
+			.attr("x", width/5+400)
+			.attr("y", height/5+270)
+			.text("Type1: " + pokemon2.type1)
+			.attr("font-family","Roboto")
+			.attr("font-size","14px");
+
+			biopopup.append("text")
+			.attr("id","type2")
+			.attr("x", width/5+100)
+			.attr("y", height/5+290)
+			.text("Type2: " + pokemon1.type2)
+			.attr("font-family","Roboto")
+			.attr("font-size","14px");
+
+			biopopup.append("text")
+			.attr("id","type2")
+			.attr("x", width/5+400)
+			.attr("y", height/5+290)
+			.text("Type2: " + pokemon2.type2)
+			.attr("font-family","Roboto")
+			.attr("font-size","14px");
+
+			biopopup.append("text")
+			.attr("id","attack")
+			.attr("x",width/5+100)
+			.attr("y",height/5+310)
+			.text("Attack: " + pokemon1.attack)
+			.attr("font-family","Roboto")
+			.attr("font-size","14px");
+
+			biopopup.append("text")
+			.attr("id","attack")
+			.attr("x",width/5+400)
+			.attr("y",height/5+310)
+			.text("Attack: " + pokemon2.attack)
+			.attr("font-family","Roboto")
+			.attr("font-size","14px");
+
+			biopopup.append("text")
+			.attr("id","defense")
+			.attr("x",width/5+100)
+			.attr("y",height/5+330)
+			.text("Defense: " + pokemon1.defense)
+			.attr("font-family","Roboto")
+			.attr("font-size","14px");
+
+			biopopup.append("text")
+			.attr("id","defense")
+			.attr("x",width/5+400)
+			.attr("y",height/5+330)
+			.text("Defense: " + pokemon2.defense)
+			.attr("font-family","Roboto")
+			.attr("font-size","14px");
+
+			biopopup.append("text")
+			.attr("id","speed")
+			.attr("x",width/5+100)
+			.attr("y",height/5+350)
+			.text("Speed: " + pokemon1.speed)
+			.attr("font-family","Roboto")
+			.attr("font-size","14px");
+
+			biopopup.append("text")
+			.attr("id","speed")
+			.attr("x",width/5+400)
+			.attr("y",height/5+350)
+			.text("Speed: " + pokemon2.speed)
+			.attr("font-family","Roboto")
+			.attr("font-size","14px");
+
+			if(pokemon1.total>pokemon2.total){
+				biopopup.append("text")
+				.attr("id","name2")
+				.attr("x", width/5 + 50 + 250)
+				.attr("y", height/5+385)
+				.text(pokemon1.name+" is more likely to win!")
+				.attr('text-anchor','middle')
+				.attr("font-family","Roboto")
+				.attr("font-size","20px");
+			}else if(pokemon1.total==pokemon2.total){
+				biopopup.append("text")
+				.attr("id","name2")
+				.attr("x", width/5 + 50 + 250)
+				.attr("y", height/5+385)
+				.text("Seems like it's going to be a tie!")
+				.attr('text-anchor','middle')
+				.attr("font-family","Roboto")
+				.attr("font-size","20px");
+			}else{
+				biopopup.append("text")
+				.attr("id","name2")
+				.attr("x", width/5 + 50 + 250)
+				.attr("y", height/5+385)
+				.text(pokemon2.name+" is more likely to win!")
+				.attr('text-anchor','middle')
+				.attr("font-family","Roboto")
+				.attr("font-size","20px");
+			}
+
+
+		}
+
+		function removePopup(){
+			d3.select("#popup").remove();
+			document.getElementById("fireaudio").pause();
+
+		}
+
+
+	</script>
+</body>
+
+
+</html>
