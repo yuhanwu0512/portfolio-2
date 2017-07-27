@@ -11,6 +11,8 @@ body {
   margin: 0;
 }
 
+
+
 /* line 45, bootstrap/_normalize.scss */
 article,
 aside,
@@ -59,6 +61,14 @@ a:active,
 a:hover {
   outline: 0;
 }
+
+span:hover {
+  background-color: lightyellow;
+  cursor: pointer;
+ 
+}
+
+
 
 /* line 109, bootstrap/_normalize.scss */
 abbr[title] {
@@ -27395,3 +27405,4 @@ button.close {
     display: none !important;
   }
 }
+

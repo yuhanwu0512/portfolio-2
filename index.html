@@ -40,7 +40,7 @@
             </div>
 
             <div class="titles">
-                Hello! I'm <a href="#" onclick="changeLogo()"><span style="color:#EF5550">Yuhan</span></a>, a UX designer.
+                Hello! I'm <span  style="color:#EF5550" href="#" onclick="changeLogo()">Yuhan</span>, a UX designer.
 
             </div>
         </div>
@@ -153,8 +153,6 @@
                             </div>
                         </div>
 
-    
-
                         <div class="col-xs-12 col-sm-6 col-md-4">
                             <div class="photo-box">
                                 <div class="image-wrap">
@@ -202,8 +200,8 @@
                 <hr noshade class="line-divider">
                 <div class="row">
                     <div class="col-xs-12 col-sm-6 col-md-6">
-                        <img id="footer-logo" src="images/logo-shape.png" alt="footer logo" height="33" width="26"></a>
-                        <p id="footer-myself">I'm a UX Designer with passion for making complex things simple. Now I am pursuing a master's degree in Information Science at Cornell. In design field, I care about <a href = "ColorPhantom.html">education</a> and <a href="https://medium.com/@vivianwuyuhan/thoughts-about-old-people-and-technology-6c9c48fbc689#.7hqmdcc73">marginal groups</a>. I am also interested in <a href="Captivate.html">VR</a>/AR and wearable devices which I see as the future trends.</p>
+                        <img id="footer-logo" src="images/logo-shape.png" alt="footer logo" height="33" width="26">
+                        <p id="footer-myself">I'm a UX Designer with a passion for making people's lives easier. The moment that I feel being a UX designer can be my <a target="_blank" href="https://twitter.com/yuhannwu/status/890466341261459456" style=color:#EF5550>candy bar job</a> is when I heard my user yelling on the other side of video chat "Oh my god we have been waiting for <a target="_blank" href="Marketo.html" style=color:#EF5550>it</a> for so long" and another user even asked me for the release date of my design. I have literally never been that happy with work before!! <br></p>
 
                     </div>
 
@@ -277,7 +275,14 @@
                         document.getElementById("logo-popup").style.display = "none";
                         $("#logo-popup").fadeIn();
                         break;
-                    case 5:
+                     case 5:
+
+                        imageNum = 6;
+                        document.getElementById("logo-popup").src = "images/logo-popup-5.png";
+                        document.getElementById("logo-popup").style.display = "none";
+                        $("#logo-popup").fadeIn();
+                        break;
+                    case 6:
 
                         imageNum = 1;
                         document.getElementById("logo-popup").style.display = "none";
