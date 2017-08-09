@@ -78,8 +78,8 @@
                             <div class="col-xs-12 col-sm-3 col-md-3">
                                 <h5>PROJECTS</h5>
                                 <p>Person Time Zone</p>
-                                <p>Tags</p>
-                                <p>Design with new UI library</p>
+                                <p>Labels</p>
+                                <p>Loading Animation</p>
 
                             </div>
 
@@ -96,13 +96,19 @@
                 
                 <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
 
-                    <p class="regular">This summer I was an intern UX designer at Marketo. Every week I have a mentor from the team with different strengths in UX process taking me go deep into user research, system design, animation, visual design, etc. I also had two main projects and some side projects during the summer. I can really see myself growing as a UX designer!</p> 
+                    <p class="regular">This summer I was an intern UX designer at Marketo. Every week I have a mentor from the team with different strengths in UX process taking me go deep into user research, system design, animation, visual design, etc. I also had two main projects and some side projects during the summer. I can really see myself growing as a UX designer! <br>See projects I worked on below:</p> 
+                    
+                    <p class="regular"><a href="#project1">Project 1: Send in Person Time Zone</a></p>
+                    <p class="regular"><a href="#project2">Project 2: Loading Animations</a></p>
+                    <p class="regular"><a href="#project3">Project 3: Labels in Mercury System</a></p>
+                    <p class="regular"><a href="#project4">Project 4: Redesign support space website</a></p>
 
                 </div>
                 
+                <button onclick="topFunction()" id="myBtn" title="Go to top"><img src="images/top.png" /></button>
 
                 <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
-                    <h2>Project 1: Send in Person Time Zone</h2>
+                    <h2 id="project1">Project 1: Send in Person Time Zone</h2>
                 </div>
                 
                 <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
@@ -158,7 +164,7 @@
                      <h3>Pilot User Testing：</h3>
                      <p class="regular"> After we settled down with the basic prototypes, I decided to do an informal user testing aimed mainly at if the two options are decent. I didn't prepare well for this test but my mentor gave me a lot of feedback after this. I wrote about this user test and things I learned in a <a target="_blank" href="https://medium.com/@yuhannwu/what-i-learned-from-a-ux-researcher-in-marketo-through-a-real-world-case-81b2c844dcd6">medium story</a>.<p>
                      <p class="regular">Changes I Made: I Added one more option which is "send at the time in my time zone" which is the default setting. I also decided to get rid of the access to the smart list because the user said they won't care about a specific person.</p>
-                     <h3>4 External User Testings:</h3> <p class="regular">I created an <a target="_blank" href="https://invis.io/DVCMBIT6T">invision prototype</a> and designed 9 tasks to conduct the four external user testing. They are all users all over the world so all the tests are done remotely. The tasks are: <br>
+                     <h3>External User Testings:</h3> <p class="regular">I created an <a target="_blank" href="https://invis.io/DVCMBIT6T">invision prototype</a> and designed 9 tasks to conduct the four external user testing. They are all users all over the world so all the tests are done remotely. The tasks are: <br>
                          1) What will you do if you want to send emails in PTZ mode? <br>
                          2) Can you read the notes in the page and explain to me what does this mean? (Asks for every sentence) <br>
                          3) Now please schedule an email at XX AM, July XX (Date based on the day of user testing). <br>
@@ -201,7 +207,16 @@
                      <p class="regular">I talked with the front-end developer who works on this project and we got a problem. She said in the existing model, we can not control the opens widget with the pie chart widget. She needs to do some research about this and suggested me to come up with a back-up design. So for the backup design I put a drop down menu on the top to control every widget. Let see what will happen... <br> It is the first time experiencing how picky it is to choose every single word for a product in the industry!! Also, there are so many details that I iterated in the whole process and it will be too much if I list them all. Different from projects in school, I really feel the obligation and responsibility to take every detail seriously because it will really affect marketers! </p>
                      <h3>My thoughts:</h3>
                      <p class="regular">This project really means a lot to me as a UX designer. It gave me the opportunity to experience how design can really make people's lives easier. When I was doing user testings, there is one user, after I introduce this concept to her, she actually yelled on the other side of BlueJeans, saying "Yay we have been waiting for this for so long" and she showed me how she has been using those time zone calculation Apps to solve this problem by herself. Another user who is in England and I need to be in the office at 8 AM. But after she flowed the design flow perfectly without any confusion and kept saying "This is so cool, if I have this last week I didn't need to schedule 20 different engagement programs". I believe a designer can never feel more satisfaction than that moment.</p>
+                     
                 </div>
+                
+                <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                  <h2 id="project2">Project 2: Loading Animation</h2>
+                    <p class="regular">Marketo is developing a new system with new UX and UI. One of my task is to design the animation when a user is loading into the new system. </p>
+                    <h3>Branding First:</h3>
+                    <p class="regular">An important thing I learned in this internship is our product should always speak for the brand. So the first thing we did was talking with the creative department and internal employees to understand the brand we are trying to show to our customers. After we got all the resources, we landed on some keywords: <br>• Customer first<br>• Professional yet playful<br>• Energetic<br>• Complicated yet simple</p>
+                </div>
+                
                 
                 
                          
@@ -287,6 +302,22 @@
               });
             });
 
+            
+            window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.getElementById("myBtn").style.display = "block";
+    } else {
+        document.getElementById("myBtn").style.display = "none";
+    }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+    document.body.scrollTop = 0; // For Chrome, Safari and Opera 
+    document.documentElement.scrollTop = 0; // For IE and Firefox
+}
 
         </script>
 
