@@ -99,8 +99,8 @@
                     <p class="regular">This summer I was an intern UX designer at Marketo. Every week I have a mentor from the team with different strengths in UX process taking me go deep into user research, system design, animation, visual design, etc. I also had two main projects and some side projects during the summer. I can really see myself growing as a UX designer! <br>See projects I worked on below:</p> 
                     
                     <p class="regular"><a href="#project1">Project 1: Send in Person Time Zone</a></p>
-                    <p class="regular"><a href="#project2">Project 2: Loading Animations</a></p>
-                    <p class="regular"><a href="#project3">Project 3: Labels in Mercury System</a></p>
+                    <p class="regular"><a href="#project3">Project 2: Labels in Mercury System</a></p>
+                    <p class="regular"><a href="#project2">Project 3: Loading Animations</a></p>
                     <p class="regular"><a href="#project4">Project 4: Redesign support space website</a></p>
 
                 </div>
@@ -108,10 +108,11 @@
                 <button onclick="topFunction()" id="myBtn" title="Go to top"><img src="images/top.png" /></button>
 
                 <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
-                    <h2 id="project1">Project 1: Send in Person Time Zone</h2>
+                    <h1 id="project1">Project 1: Send in Lead Time Zone</h1>
                 </div>
                 
                 <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                    <h2>Problem Identification:</h2>
                     <p class="regular">Marketo is a marketing software. One main function is marketers can send massive emails out to their customers. The interface of sending emails is as follows. (Do not laugh at our interface developed 10 years ago. Our team is working on a cool system redesign!)<p>
                 </div>
                 
@@ -120,12 +121,12 @@
                 </div>
                 
                 <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
-                    <h3>The problem we want to solve:</h3>
+
                     <p class="regular">Based on former user research and feedback, timing is very important in marketing. Emails sent out at different time periods can have different open rates and click rates which are the main success metrics for marketing by emails. For most companies with global customers, they always need to create different email programs for customers in different time zones which need a lot of duplicated operations and are very time- consuming. <p>
                     
                     <p class="regular">To solve this problem, we created a new feature called "Person Time Zone"(PTZ) at first. If a user chooses to send at 8 AM 4th Aug in PTZ, customers all over the world will receive this email at 8 AM 4th Aug, no matter if they are in the same time zone as the marketer. It seems like a simple logic, but I also need to think about how to deal with the situation that after a marketer set a time and didn't realize some parts of the globe has already passed this time, also how to redesign the track page. <p>
                     
-                    <h3>Brainstorm and wireframes:</h3> 
+                    <h2>Brainstorm and wireframes:</h2> 
                     <p class="regular">Taking consideration of time difference, the time needed to process emails and head start feature(start processing emails 12 hours earlier of the time set), this whole thing is actually very complex. First I tried to use simple word warnings to explain this situation.<p>
                     
                      <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
@@ -145,22 +146,19 @@
                   
                 </div>
                 <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
-                  <img class="img-responsive" src="images/exploretrackpage.png">
-                </div>
-                
-                <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
-                    <p class="regular">Above are part of exploration sketches. I decided to use a map to tell users the warning information because it is the most intuitive way to tell things about time zones. I also added a pie chart to tell them how much percentage of customers have passed that time, so they can decide what to do with those customers. Besides those main information, I sketched all the possibility of interactions: radio buttons or combo box, should we show the map in the beginning or hide it in a link, should we give access to smart lists, etc. I always share those sketches with my team and we will discuss the pros and cons of each design and make decisions together. One of my teammates suggested combining the map with the pie chart. This can not only make the interface simpler but also show the relation between map and pie chart. The second picture is the exploration of track page. I decided to go with pie chart because it follows the existing model so it will not be hard for users to adapt to and keeps consistency with other track pages. Below is the high-fidelity prototype based on our semifinal decision. </p>
-    
-                    </div>
-                <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
-                <h3>High-Fidelity Version 1</h3>
-                    </div> 
-                <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
-                  <img class="img-responsive" src="images/tzhifi.png">
+                    <img class="img-responsive" src="images/tzhifi.png">
                     <img class="img-responsive" src="images/track%20page%20initial.png">
                 </div>
                 
+                <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                    <p class="regular">Above are part of exploration sketches. I decided to use a map to tell users the warning information because it is the most intuitive way to tell things about time zones. I also added a pie chart to tell them how much percentage of customers have passed that time, so they can decide what to do with those customers. Besides those main information, I sketched all the possibility of interactions: radio buttons or combo box, should we show the map in the beginning or hide it in a link, should we give access to smart lists, etc. I always share those sketches with my team and we will discuss the pros and cons of each design and make decisions together. One of my teammates suggested combining the map with the pie chart. This can not only make the interface simpler but also show the relation between map and pie chart. The second picture is the exploration of track page. I decided to go with pie chart because it follows the existing model so it will not be hard for users to adapt to and keeps consistency with other track pages.  </p>
+    
+                    </div>
+            
+              
+                
                  <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                     <h2>User Testing & Iteration</h2>
                      <h3>Pilot User Testing：</h3>
                      <p class="regular"> After we settled down with the basic prototypes, I decided to do an informal user testing aimed mainly at if the two options are decent. I didn't prepare well for this test but my mentor gave me a lot of feedback after this. I wrote about this user test and things I learned in a <a target="_blank" href="https://medium.com/@yuhannwu/what-i-learned-from-a-ux-researcher-in-marketo-through-a-real-world-case-81b2c844dcd6">medium story</a>.<p>
                      <p class="regular">Changes I Made: I Added one more option which is "send at the time in my time zone" which is the default setting. I also decided to get rid of the access to the smart list because the user said they won't care about a specific person.</p>
@@ -205,11 +203,18 @@
                       <source src="trackpagenew.mov" type="video/mp4" />
                 </video>
                      
-                     <h3>Design Review and 😭:</h3>
+                     <h2>Design Review and 😭:</h2>
                      <p class="regular">After the consensus among my manager and the product manager, we moved to the step of design review. This is my first design review in industry and it really made me realize that there is still a long way to go to become a great designer. </p>
                      <p class="regular">I created several user flows and practiced for many times walking through from a user's perspective. I was confident at first but didn't realize things will go on in a way I didn't expect at all.</p>
-                     <p class="regular">As I started presenting my "delicated designed flow", people started to throw questions at me, some of which I didn't even think of before. For example, I didn't know there can be a lot of customers who we may not have time zone record so there are no corresponding solutions. The front-end developer questioned the feasibility and the cost of track page design. And generally, people think my design is way too complicated for this simple feature. My design was piled up bit by bit and I was really upset.</p>
-                     <p class="regular">When I walked out the meeting room, my teammates who were in that meeting started to comfort me saying things like "Don't be upset, this is how design </p>
+                     <p class="regular">As I started presenting my "delicate designed flow", people started to throw questions at me, some of which I didn't even think of before. For example, I didn't know there can be a lot of customers who we may not have time zone record so there are no corresponding solutions. The front-end developer questioned the feasibility and the cost of track page design. And generally, people think my design is way too complicated for this simple feature. My design was piled up bit by bit and I was really upset.</p>
+                     <p class="regular">When I walked out the meeting room, my teammates who were in that meeting started to comfort me saying things like "Don't be upset, this is what may happen in design reviews." Actually, It only took me a couple of minutes to be upset, then I started to reflect what went wrong in this design process. I concluded into 2 things: <br>
+                         • <b>Didn't involve stakeholders</b>: There are a lot of problems brought up in the design review can be avoided in advance by involving all stakeholders. By talking with the director of PM who has been working on Marketo for 8 years and knows everything about it, I would be able to know some factors I need to take into consideration. By talking with front-end developers, I can now some existing restrictions. <br>
+                         • <b>Big picture & Details</b>: As time goes on, I tend to dig into details of this feature. Also, the more users I talked with, the more needs they will bring up and the nature of a UXer is to fulfill them. Those result in the fact that I brought too much complexity into this feature. I forgot to step back and see the big picture.<br>
+                     </p>
+                     <p class="regular">I was upset back then but now I think that design review is such a great experience and made me reflect a lot on how to be a better designer.</p>
+                     
+                     <h3>Iteration:</h3>
+                     <p class="regular">Based on the feedback I got, I made changes for one goal: Simplicity.</p>
                      
                      
 <!--
@@ -218,13 +223,37 @@
 -->
                      
                 </div>
+                <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">   
+                   <img class="img-responsive" src="images/newtimezone1.png"> 
+                    <img class="img-responsive" src="images/newtimezone2.png">  
+                </div>
                 
                 <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
-                  <h2 id="project2">Project 2: Loading Animation</h2>
+                <p class="regular">The dropdown menu is not intuitive enough, so I changed it into radio buttons and elaborated what does LTZ mean. For simplicity, I saved the trouble of making choice every time there is a conflict and just put it into a setting. I also took customers who don't have time zone data into consideration. Also, I decided to get rid of the interaction between email send and opens. </p>
+                </div>
+                <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                <h2>My thoughts:</h2>
+             <p class="regular">This project really means a lot to me as a UX designer. It gave me the opportunity to experience how design can really make people's lives easier. When I was doing user testings, there is one user, after I introduce this concept to her, she actually yelled on the other side of BlueJeans, saying "Yay we have been waiting for this for so long" and she showed me how she has been using those time zone calculation Apps to solve this problem by herself. Another user who is in England and I need to be in the office at 8 AM. But after she flowed the design flow perfectly without any confusion and kept saying "This is so cool, if I have this last week I didn't need to schedule 20 different engagement programs". I believe a designer can never feel more satisfaction than that moment. Besides my ups, there are also downs. That design review was a tough but valuable experience.</p>
+                </div>
+            
+                
+                 <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                  <h1 id="project3">Project 2: Labels in Mercury System</h1>
+                     <h2>Problem We Are Solving：</h2>
+                    <p class="regular">Marketo is developing a new UI system "Mercury". In the Marketo App, every time a marketer creates a program, there will be a tree node. Based on previous user research, many customers have tons of program tress nodes and it's so hard for them to manage, search and view reports. We got a requirement from product managers that we are introducing labels into the Mercury system where a user can put a label on a program for future search and reports.</p>
+                     <h2>Start With Core Function</h2>
+                     <p class="regular">The Beta of Mercury system will be tested with 25 users in late September so for labels we are only presenting the core function in this period which are:<br>• Add labels to a program on creating<br>• Delete labels on creating<br>• Edit labels in asset detail page   </p>
+                
+                       
+                     
+                </div>
+                
+                <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                  <h1 id="project2">Project 3: Loading Animation</h1>
                     <p class="regular">Marketo is developing a new system with new UX and UI. One of my tasks is to design the animation when a user is loading into the new system. </p>
-                    <h3>Branding First:</h3>
+                    <h2>Branding First:</h2>
                     <p class="regular">An important thing I learned in this internship is our product should always speak for the brand. So the first thing we did was talking with the creative department and internal employees to understand the brand we are trying to show to our customers. After we got all the resources, we landed on some keywords: <br>• Customers first<br>• Professional yet playful<br>• Energetic<br>• Complicated yet simple</p>
-                    <h3>Brainstorm and Demo</h3>
+                    <h2>Brainstorm and Demo</h2>
                     <p class="regular">I started to think of a short animation which can tell a story which can tell a story about the brand we want to convey to our customers. After a few brainstorms, we came up with this animation: </p>
                 </div>
                 <div id="animationvideo" class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
@@ -238,21 +267,6 @@
                     <h3>Skeleton Screens</h3>
                     <p class="regular">The concern of that animation is it will be too complicated if we show it every time when there are page loading. That's why we decided that the animation above will only be used when the user is loading into our system. Inside the app, we will use skeleton loading.</p>
                     <p class="regular">A skeleton screen gives a visual cue that content is loading one after the other into each UI element area. It has been found that skeleton screens play a major role in the perception of users who appear to think that these are not as slow as spinners or progress bars.</p>
-                </div>
-                
-                 <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
-                  <h2 id="project3">Project 3: Labels in Mercury System</h2>
-                     <h3>Problem We Are Solving：</h3>
-                    <p class="regular">Marketo is developing a new UI system "Mercury". In the Marketo App, every time a marketer creates a program, there will be a tree node. Based on previous user research, many customers have tons of program tress nodes and it's so hard for them to manage, search and view reports. We got a requirement from product managers that we are introducing labels into the Mercury system where a user can put a label on a program for future search and reports.</p>
-                     <h3>Start With Core Function</h3>
-                     <p class="regular">The Beta of Mercury system will be tested with 25 users in late September so for labels we are only presenting the core function in this period which are:<br>• Add labels to a program on creating<br>• Delete labels on creating<br>• Edit labels in asset detail page   </p>
-                
-                
-                         
-                         
-                         
-                     
-                     
                 </div>
               
                 
