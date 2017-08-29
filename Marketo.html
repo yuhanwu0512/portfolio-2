@@ -112,7 +112,7 @@
                 </div>
                 
                 <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
-                    <h2>Problem Identification:</h2>
+                    <h2>Product Requirement (Problem Identification):</h2>
                     <p class="regular">Marketo is a marketing software. One main function is marketers can send massive emails out to their customers. The interface of sending emails is as follows. (Do not laugh at our interface developed 10 years ago. Our team is working on a cool system redesign!)<p>
                 </div>
                 
@@ -126,7 +126,7 @@
                     
                     <p class="regular">To solve this problem, we created a new feature called "Person Time Zone"(PTZ) at first. If a user chooses to send at 8 AM 4th Aug in PTZ, customers all over the world will receive this email at 8 AM 4th Aug, no matter if they are in the same time zone as the marketer. It seems like a simple logic, but I also need to think about how to deal with the situation that after a marketer set a time and didn't realize some parts of the globe has already passed this time, also how to redesign the track page. <p>
                     
-                    <h2>Brainstorm and wireframes:</h2> 
+                    <h2>Brainstorm and quick sketching:</h2> 
                     <p class="regular">Taking consideration of time difference, the time needed to process emails and head start feature(start processing emails 12 hours earlier of the time set), this whole thing is actually very complex. First I tried to use simple word warnings to explain this situation.<p>
                     
                      <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
@@ -158,11 +158,11 @@
               
                 
                  <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
-                     <h2>User Testing & Iteration</h2>
-                     <h3>Pilot User Testing：</h3>
+                     <h2>Customer Testing & Iteration</h2>
+                     <h3>Internal(Pilot) Customer Testing：</h3>
                      <p class="regular"> After we settled down with the basic prototypes, I decided to do an informal user testing aimed mainly at if the two options are decent. I didn't prepare well for this test but my mentor gave me a lot of feedback after this. I wrote about this user test and things I learned in a <a target="_blank" href="https://medium.com/@yuhannwu/what-i-learned-from-a-ux-researcher-in-marketo-through-a-real-world-case-81b2c844dcd6">medium story</a>.<p>
                      <p class="regular">Changes I Made: I Added one more option which is "send at the time in my time zone" which is the default setting. I also decided to get rid of the access to the smart list because the user said they won't care about a specific person.</p>
-                     <h3>External User Testings:</h3> <p class="regular">I created an <a target="_blank" href="https://invis.io/DVCMBIT6T">invision prototype</a> and designed 9 tasks to conduct the four external user testing. They are all users all over the world so all the tests are done remotely. The tasks are: <br>
+                     <h3>External Customer Testings:</h3> <p class="regular">I created an <a target="_blank" href="https://invis.io/DVCMBIT6T">invision prototype</a> and designed 9 tasks to conduct the four external user testing. They are all users all over the world so all the tests are done remotely. The tasks are: <br>
                          1) What will you do if you want to send emails in PTZ mode? <br>
                          2) Can you read the notes in the page and explain to me what does this mean? (Asks for every sentence) <br>
                          3) Now please schedule an email at XX AM, July XX (Date based on the day of user testing). <br>
@@ -242,7 +242,7 @@
                      <h2>Problem We Are Solving：</h2>
                     <p class="regular">Marketo is developing a new UI system "Mercury". In the Marketo App, every time a marketer creates a program, there will be a tree node. Based on previous user research, many customers have tons of program tree nodes and it's so hard for them to manage, search and view reports. We got a requirement from product managers that we are introducing labels into the Mercury system where a user can put a label on a program for future search and reports.</p>
                      <h2>Start With Core Function</h2>
-                     <p class="regular">The Beta of Mercury system will be tested with 25 users in late September so for labels we are only presenting the core function in this period which are:<br>• Add labels to a program on creating<br>• Delete labels on creating<br>• Edit labels in asset detail page   </p>
+                     <p class="regular">The Beta of Mercury system will be tested with 25 users in late September so for labels, we are only presenting the core functions in this period which are:<br>• Add labels to a program on creating<br>• Delete labels on creating<br>• Edit labels in asset detail page   </p>
                      </div>
                      <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
                          <h2>Quick Prototyping</h2>        
@@ -259,7 +259,18 @@
                     <video width="880" height="567" autoplay loop>
                       <source src="version2.mov" type="video/mp4" />
                    </video>
-                         <p class="regular">Version 2 specified the interaction of adding labels with autofill, put focus on the first item, label removed from list when applied and already applied notification. Also, we changed the interaction of clicking plus button to create new label into word button and this label will be applied when created. Moreover, the copy label logic allows users to have more flexibility. </p>      
+                         <p class="regular">Version 2 specified the interaction of adding labels with auto fill, put the focus on the first item, label removed from the list when applied and already applied notification. Also, we changed the interaction of clicking plus button to create new label into word button and this label will be applied when created. Moreover, the copy label logic allows users to have more flexibility. </p>  
+                    <h2>Version 3</h2>
+                      <video width="900" height="567" autoplay loop>
+                      <source src="version3.mov" type="video/mp4" />
+                   </video> 
+                    <p class="regular">In version 3, we considered every detail of interactions. For the problem of copy label and limit, we came up with a more elegant solution which is a user can either add labels by himself or copy from the parent.</p>
+                    
+                    <h2>My Thoughts: How is industry different from school projects</h2>
+                         <p class="regular">The <b>process</b> of designing label feature has nothing similar to a standard UX process. We didn't do user research because both customers and the product team has been talking about this feature for a long time so we know it's an existing and solid need.</p>
+                         <p class="regular">Usually school projects will not impact a lot of people so every time we came up with something, we just do a few design critics and then move on. However, the design we are doing in industry will really impact customers and satisfaction from them. For this label feature, although I only put 3 versions of design here, we actually had at least 5 meetings. Every time there will be people bringing up new suggestions. <b>One thing I think I still need to learn is how to distinguish suggestions that I should take in and others to be neglected, also the ability to know when is the time to call an end of this design in certain time period.</b> </p>
+                         <p class="regular">Another thing that worth mention is in our new system, we have a UI library so we only need to deliver low-fidelity prototype. Front-end developers will use UI library to input product directly. It will save a lot of time and will keep everything consistent. The thing I learned here is design strategy is quite important in industry. <b>Before we start working, we should have a profound strategy which ensures that we can build the best product with the least effort</b>.</p>
+                         <p class="regular">The design review for labels is the last work I did during the internship. I feel good that there are much fewer problems brought up in this session compared with the first one. We have more solid user flow and covered all details people can think about. The only regret is I can not stay until the feature is released. 😢 </p>
               </div>
                      
                        
@@ -282,9 +293,18 @@
                 <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
                     <p class="regular">This animation tells a story:<br> The bouncing ball represents our customer, the four bars mean Marketo. Our goal is to help our customer jump higher. The last jump represents the success of our customer. After our customer achieves success, the circle completes which can either mean customer's success makes Marketo complete or Marketo and customer families.  </p>
                     <p class="regular">The animation corresponds to the brand because it highlights the importance of our customers. It tells the value of our company yet stays in a playful manner.</p>
-                    <h3>Skeleton Screens</h3>
-                    <p class="regular">The concern of that animation is it will be too complicated if we show it every time when there are page loading. That's why we decided that the animation above will only be used when the user is loading into our system. Inside the app, we will use skeleton loading.</p>
+                    <h2>Skeleton Screens</h2>
+                    <p class="regular">The concern of that animation is it will be too complicated if we show it every time when there is a page loading. That's why we decided that the animation above will only be used when the user is loading into our system. Inside the app, we will use skeleton loading.</p>
                     <p class="regular">A skeleton screen gives a visual cue that content is loading one after the other into each UI element area. It has been found that skeleton screens play a major role in the perception of users who appear to think that these are not as slow as spinners or progress bars.</p>
+                </div>
+                
+                 <div class="project-real-content col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                     <h1 id="project4">Project 4: Redesign Support Space Website</h1>
+                     <h2>Design Help Meet-up</h2>
+                     <p class="regular">This project was a design help for customer support department. The original website was built a long time ago and is super complicated and confusing. People from the support department needed our help reorganizing the information structure and overall layout. The original website looks like this:</p>
+                      <img class="img-responsive" src="images/supportoriginial.png"> 
+                     <h2>Cart Sorting and the Failure 😂</h2>
+                     <p class="regular">After we audited the website by ourselves, we found there are too many information on this website and some of them are even duplicated. We want to know what information the users </p>
                 </div>
               
                 
