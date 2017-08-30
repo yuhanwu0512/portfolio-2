@@ -11,6 +11,10 @@ body {
   margin: 0;
 }
 
+#buttonimg {
+    cursor: pointer;
+}
+
 #myBtn {
     display: none; /* Hidden by default */
     position: fixed; /* Fixed/sticky position */
